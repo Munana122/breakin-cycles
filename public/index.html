@@ -9,74 +9,65 @@
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     
     <style>
-        /* [Previous CSS remains the same - copy from your original file] */
-        
-        /* Add these new styles for auth */
-        .auth-modal {
-            display: none;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 1rem 2rem;
         }
-        
-        .auth-modal.active {
-            display: flex;
-        }
-        
-        .auth-container {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 450px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        .auth-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #ecf0f1;
-        }
-        
-        .auth-tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: #7f8c8d;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .auth-tab.active {
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #667eea;
-            border-bottom-color: #667eea;
+            cursor: pointer;
         }
-        
-        .auth-form {
-            display: none;
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
         }
-        
-        .auth-form.active {
-            display: block;
+
+        .nav-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
         }
-        
-        .typing-indicator {
-            padding: 1rem;
-            font-style: italic;
-            color: #7f8c8d;
-            font-size: 0.9rem;
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #667eea;
         }
-        
+
         .user-badge {
             display: inline-flex;
             align-items: center;
@@ -88,98 +79,855 @@
             font-size: 0.9rem;
             cursor: pointer;
         }
-        
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #2c3e50;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 100px 0 50px 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* HOME SECTION */
+        .home-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .mission-statement {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* LEARN SECTION */
+        .learn-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-content {
+            padding: 2rem;
+        }
+
+        .course-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .course-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .course-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        /* COMMUNITY SECTION */
+        .community-section {
+            background: white;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .group-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-top: 4px solid #667eea;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .group-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            color: white;
+        }
+
+        /* STORIES SECTION */
+        .stories-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .stories-section .section-title {
+            color: white;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .story-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* CONTACT SECTION */
+        .contact-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .founder-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .founder-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            margin: 0 auto 2rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-modal.active {
+            display: flex;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
         .error-message {
             background: #f8d7da;
             color: #721c24;
             padding: 1rem;
             border-radius: 10px;
             margin-bottom: 1rem;
-            border: 1px solid #f5c6cb;
         }
-        
-        /* Copy all previous CSS here */
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Chat Modal */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .chat-modal.active {
+            display: flex;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .close-chat {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-author {
+            font-weight: 600;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .message-text {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            color: #5a6c7d;
+        }
+
+        .chat-input-container {
+            padding: 1.5rem 2rem;
+            background: white;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input-wrapper input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .mission-statement {
+                font-size: 1.1rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .learn-grid,
+            .community-grid,
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Auth Modal -->
     <div class="auth-modal" id="authModal">
         <div class="auth-container">
-            <h2 style="text-align: center; margin-bottom: 2rem; color: #2c3e50;">Welcome to Breaking Cycles</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Welcome to Breaking Cycles</h2>
             
             <div class="auth-tabs">
                 <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
                 <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
             </div>
             
-            <!-- Login Form -->
             <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="loginEmail">Email</label>
+                    <label>Email</label>
                     <input type="email" id="loginEmail" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword">Password</label>
+                    <label>Password</label>
                     <input type="password" id="loginPassword" required>
                 </div>
                 <div id="loginError" class="error-message" style="display: none;"></div>
                 <button type="submit" class="btn-submit">Login</button>
             </form>
             
-            <!-- Register Form -->
             <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
                 <div class="form-group">
-                    <label for="registerName">Full Name</label>
+                    <label>Full Name</label>
                     <input type="text" id="registerName" required>
                 </div>
                 <div class="form-group">
-                    <label for="registerEmail">Email</label>
+                    <label>Email</label>
                     <input type="email" id="registerEmail" required>
                 </div>
                 <div class="form-group">
-                    <label for="registerPassword">Password</label>
+                    <label>Password</label>
                     <input type="password" id="registerPassword" required minlength="6">
-                </div>
-                <div class="form-group">
-                    <label for="registerPhone">Phone (optional)</label>
-                    <input type="tel" id="registerPhone">
-                </div>
-                <div class="form-group">
-                    <label for="registerLocation">Location (optional)</label>
-                    <input type="text" id="registerLocation">
                 </div>
                 <div id="registerError" class="error-message" style="display: none;"></div>
                 <button type="submit" class="btn-submit">Register</button>
             </form>
             
-            <p style="text-align: center; margin-top: 1.5rem; color: #7f8c8d;">
-                Continue as <a href="#" onclick="closeAuthModal(); return false;" style="color: #667eea;">Guest</a>
+            <p style="text-align: center; margin-top: 1.5rem;">
+                <a href="#" onclick="closeAuthModal(); return false;" style="color: #667eea;">Continue as Guest</a>
             </p>
         </div>
     </div>
 
-    <!-- [Copy all previous HTML sections here: nav, home, learn, community, stories, contact] -->
-    
-    <!-- Updated Chat Modal with Socket.IO integration -->
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="showSection('home')">Breaking Cycles</div>
+            <ul class="nav-links">
+                <li><a class="nav-link active" onclick="showSection('home')">Home</a></li>
+                <li><a class="nav-link" onclick="showSection('learn')">Learn</a></li>
+                <li><a class="nav-link" onclick="showSection('community')">Community</a></li>
+                <li><a class="nav-link" onclick="showSection('stories')">Stories</a></li>
+                <li><a class="nav-link" onclick="showSection('contact')">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <section id="home" class="section home-section active">
+        <div class="hero-content">
+            <h1>🌟 Breaking the Cycle</h1>
+            <p class="mission-statement">
+                Breaking the cycle of poverty among women through education and empowerment.
+            </p>
+            <div class="cta-buttons">
+                <a class="btn btn-primary" onclick="showSection('community')">🤝 Join Community</a>
+                <a class="btn btn-secondary" onclick="showSection('learn')">📚 Start Learning</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEARN -->
+    <section id="learn" class="section learn-section">
+        <div class="container">
+            <h2 class="section-title">Transform Your Future</h2>
+            <div class="learn-grid">
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">💵</div>
+                        <h3>Financial Literacy</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="course-list">
+                            <li class="course-item">
+                                <h4>📊 Budgeting Basics</h4>
+                                <p>Learn to create and stick to a budget</p>
+                            </li>
+                            <li class="course-item">
+                                <h4>💰 Saving & Emergency Funds</h4>
+                                <p>Build financial security step by step</p>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%;">Explore Courses</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">💻</div>
+                        <h3>Coding & Tech</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="course-list">
+                            <li class="course-item">
+                                <h4>🌐 Web Development</h4>
+                                <p>HTML, CSS, and JavaScript</p>
+                            </li>
+                            <li class="course-item">
+                                <h4>🐍 Python for Beginners</h4>
+                                <p>Start your programming journey</p>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%;">Explore Courses</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🚀</div>
+                        <h3>Entrepreneurship</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="course-list">
+                            <li class="course-item">
+                                <h4>💡 Business Planning 101</h4>
+                                <p>Create a solid foundation</p>
+                            </li>
+                            <li class="course-item">
+                                <h4>🎯 Marketing Your Business</h4>
+                                <p>Reach customers and grow sales</p>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%;">Explore Courses</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section id="community" class="section community-section">
+        <div class="container">
+            <h2 class="section-title">Join Your Community</h2>
+            <div class="community-grid">
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon">👶</div>
+                        <div>
+                            <h3>Young Mothers Circle</h3>
+                            <p>342 members</p>
+                        </div>
+                    </div>
+                    <p>A supportive space for young mothers to share experiences and navigate education while raising children.</p>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="openChatRoom('Young Mothers Circle', '👶', 342)">Join Chat Room</button>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon">♿</div>
+                        <div>
+                            <h3>Empowered Abilities</h3>
+                            <p>186 members</p>
+                        </div>
+                    </div>
+                    <p>Celebrating abilities and creating opportunities for girls and women with disabilities.</p>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="openChatRoom('Empowered Abilities', '♿', 186)">Join Chat Room</button>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon">🤝</div>
+                        <div>
+                            <h3>Sisters Supporting Sisters</h3>
+                            <p>567 members</p>
+                        </div>
+                    </div>
+                    <p>Main community for all women breaking cycles of poverty, trauma, and limitation.</p>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="openChatRoom('Sisters Supporting Sisters', '🤝', 567)">Join Chat Room</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORIES -->
+    <section id="stories" class="section stories-section">
+        <div class="container">
+            <h2 class="section-title">Stories of Transformation</h2>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">👑</div>
+                        <div>
+                            <h3>Oprah Winfrey</h3>
+                            <p>From poverty to purpose</p>
+                        </div>
+                    </div>
+                    <p>"The greatest discovery of all time is that a person can change their future by merely changing their attitude."</p>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">✍️</div>
+                        <div>
+                            <h3>Maya Angelou</h3>
+                            <p>From silence to powerful voice</p>
+                        </div>
+                    </div>
+                    <p>"There is no greater agony than bearing an untold story inside you."</p>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">💄</div>
+                        <div>
+                            <h3>Munana Merveille</h3>
+                            <p>Founder of Breaking Cycles</p>
+                        </div>
+                    </div>
+                    <p>"Every woman deserves the chance to rewrite her story and break the cycles that have held her family back for generations."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="founder-info">
+                    <div class="founder-avatar">MM</div>
+                    <h3>Munana Merveille</h3>
+                    <p style="color: #667eea; font-weight: 600; margin-bottom: 1rem;">Founder & Visionary</p>
+                    <p>📧 m.munana@alustudent.com</p>
+                    <p>📱 +250791839793</p>
+                    <p>🌍 Kigali, Rwanda</p>
+                </div>
+
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 1.5rem;">Send Us a Message</h3>
+                    <form onsubmit="submitContact(event)">
+                        <div class="form-group">
+                            <label>Your Name *</label>
+                            <input type="text" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject *</label>
+                            <input type="text" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message *</label>
+                            <textarea name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">📤 Send Message</button>
+                        <div id="contactSuccess" class="success-message">
+                            ✅ Thank you for reaching out! We'll get back to you soon.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Modal -->
     <div class="chat-modal" id="chatModal">
         <div class="chat-container">
             <div class="chat-header">
                 <div class="chat-header-info">
-                    <div class="chat-room-icon" id="chatRoomIcon">👶</div>
-                    <div class="chat-room-name">
+                    <div style="font-size: 2rem;" id="chatRoomIcon">👶</div>
+                    <div>
                         <h3 id="chatRoomName">Young Mothers Circle</h3>
-                        <p class="chat-room-status"><span id="onlineCount">0</span> members online</p>
+                        <p><span id="onlineCount">0</span> members online</p>
                     </div>
                 </div>
                 <button class="close-chat" onclick="closeChatRoom()">✕</button>
             </div>
             
             <div class="chat-messages" id="chatMessages"></div>
-            <div class="typing-indicator" id="typingIndicator" style="display: none;"></div>
             
             <div class="chat-input-container">
                 <div class="chat-input-wrapper">
-                    <input type="text" id="chatInput" placeholder="Share your thoughts, ask questions, or celebrate a win..." onkeypress="handleChatKeyPress(event)" oninput="handleTyping()">
+                    <input type="text" id="chatInput" placeholder="Share your thoughts..." onkeypress="handleChatKeyPress(event)">
                     <button class="send-btn" onclick="sendChatMessage()">📤</button>
                 </div>
             </div>
@@ -188,19 +936,18 @@
 
     <script>
         // Configuration
-        const API_URL = 'http://localhost:3000';
+        const API_URL = window.location.origin;
         let socket = null;
         let currentUser = null;
         let currentRoom = null;
-        let typingTimeout = null;
         
-        // Initialize app
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
             initializeSocketIO();
         });
         
-        // ==================== AUTH FUNCTIONS ====================
+        // ==================== AUTH ====================
         
         function checkAuth() {
             const token = localStorage.getItem('token');
@@ -234,7 +981,6 @@
             event.target.classList.add('active');
             document.getElementById(tab + 'Form').classList.add('active');
             
-            // Clear errors
             document.getElementById('loginError').style.display = 'none';
             document.getElementById('registerError').style.display = 'none';
         }
@@ -277,15 +1023,13 @@
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
-            const phone = document.getElementById('registerPhone').value;
-            const location = document.getElementById('registerLocation').value;
             const errorDiv = document.getElementById('registerError');
             
             try {
                 const response = await fetch(`${API_URL}/api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password, phone, location })
+                    body: JSON.stringify({ name, email, password })
                 });
                 
                 const data = await response.json();
@@ -307,7 +1051,6 @@
         }
         
         function updateUIForLoggedInUser() {
-            // Add user badge to navbar
             const navContainer = document.querySelector('.nav-container');
             const existingBadge = document.getElementById('userBadge');
             
@@ -331,15 +1074,13 @@
         
         function openAuthModal() {
             document.getElementById('authModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
         
         function closeAuthModal() {
             document.getElementById('authModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
         }
         
-        // ==================== SOCKET.IO FUNCTIONS ====================
+        // ==================== SOCKET.IO ====================
         
         function initializeSocketIO() {
             socket = io(API_URL);
@@ -359,28 +1100,11 @@
             socket.on('user-joined', (data) => {
                 displaySystemMessage(`${data.userName} joined the chat`);
             });
-            
-            socket.on('user-typing', (data) => {
-                const indicator = document.getElementById('typingIndicator');
-                if (data.isTyping) {
-                    indicator.textContent = `${data.userName} is typing...`;
-                    indicator.style.display = 'block';
-                } else {
-                    indicator.style.display = 'none';
-                }
-            });
-            
-            socket.on('disconnect', () => {
-                console.log('❌ Disconnected from server');
-            });
         }
         
-        // ==================== CHAT FUNCTIONS ====================
+        // ==================== CHAT ====================
         
         async function openChatRoom(roomName, icon, memberCount) {
-            event.preventDefault();
-            
-            // Check if user is logged in
             if (!currentUser) {
                 openAuthModal();
                 return;
@@ -388,17 +1112,13 @@
             
             currentRoom = roomName;
             
-            // Update UI
             document.getElementById('chatRoomIcon').textContent = icon;
             document.getElementById('chatRoomName').textContent = roomName;
             document.getElementById('chatModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
             
-            // Clear messages
             document.getElementById('chatMessages').innerHTML = '<div style="text-align: center; padding: 2rem; color: #7f8c8d;">Loading messages...</div>';
             
             try {
-                // Join room via API
                 await fetch(`${API_URL}/api/rooms/${encodeURIComponent(roomName)}/join`, {
                     method: 'POST',
                     headers: {
@@ -406,14 +1126,11 @@
                     }
                 });
                 
-                // Load messages
                 const response = await fetch(`${API_URL}/api/rooms/${encodeURIComponent(roomName)}/messages`);
                 const data = await response.json();
                 
-                // Display messages
                 displayMessages(data.messages);
                 
-                // Join room via Socket.IO
                 socket.emit('join-room', {
                     roomName,
                     userId: currentUser.id,
@@ -421,14 +1138,11 @@
                     userAvatar: currentUser.avatar
                 });
                 
-                // Focus input
-                setTimeout(() => {
-                    document.getElementById('chatInput').focus();
-                }, 100);
+                document.getElementById('chatInput').focus();
                 
             } catch (error) {
                 console.error('Error loading chat:', error);
-                document.getElementById('chatMessages').innerHTML = '<div style="text-align: center; padding: 2rem; color: #e74c3c;">Failed to load messages. Please try again.</div>';
+                document.getElementById('chatMessages').innerHTML = '<div style="text-align: center; padding: 2rem; color: #e74c3c;">Failed to load messages.</div>';
             }
         }
         
@@ -451,10 +1165,10 @@
             const timeAgo = message.time || formatTimeAgo(message.createdAt);
             
             messageEl.innerHTML = `
-                <div class="message-avatar">${message.avatar}</div>
+                <div class="message-avatar">${escapeHtml(message.avatar)}</div>
                 <div class="message-content">
                     <div class="message-header">
-                        <span class="message-author">${message.author}</span>
+                        <span class="message-author">${escapeHtml(message.author)}</span>
                         <span class="message-time">${timeAgo}</span>
                     </div>
                     <p class="message-text">${escapeHtml(message.text)}</p>
@@ -511,25 +1225,6 @@
             }
         }
         
-        function handleTyping() {
-            if (!currentUser || !currentRoom) return;
-            
-            socket.emit('typing', {
-                roomName: currentRoom,
-                userName: currentUser.name,
-                isTyping: true
-            });
-            
-            clearTimeout(typingTimeout);
-            typingTimeout = setTimeout(() => {
-                socket.emit('typing', {
-                    roomName: currentRoom,
-                    userName: currentUser.name,
-                    isTyping: false
-                });
-            }, 1000);
-        }
-        
         function closeChatRoom() {
             if (currentUser && currentRoom) {
                 socket.emit('leave-room', {
@@ -539,29 +1234,11 @@
             }
             
             document.getElementById('chatModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
             document.getElementById('chatInput').value = '';
             currentRoom = null;
         }
         
-        // ==================== UTILITY FUNCTIONS ====================
-        
-        function formatTimeAgo(date) {
-            const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-            
-            if (seconds < 60) return 'Just now';
-            if (seconds < 3600) return Math.floor(seconds / 60) + ' min ago';
-            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
-            return Math.floor(seconds / 86400) + ' days ago';
-        }
-        
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        // ==================== CONTACT FORM ====================
+        // ==================== CONTACT ====================
         
         async function submitContact(event) {
             event.preventDefault();
@@ -577,11 +1254,11 @@
                 });
                 
                 if (response.ok) {
-                    document.getElementById('contactSuccessMessage').style.display = 'block';
+                    document.getElementById('contactSuccess').style.display = 'block';
                     event.target.reset();
                     
                     setTimeout(() => {
-                        document.getElementById('contactSuccessMessage').style.display = 'none';
+                        document.getElementById('contactSuccess').style.display = 'none';
                     }, 5000);
                 }
             } catch (error) {
@@ -589,7 +1266,43 @@
             }
         }
         
-        // [Copy all other JavaScript functions from original file]
+        // ==================== NAVIGATION ====================
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(
+                link => link.textContent.toLowerCase() === sectionId
+            );
+            if (activeLink) activeLink.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+        
+        // ==================== UTILITIES ====================
+        
+        function formatTimeAgo(date) {
+            const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return Math.floor(seconds / 60) + ' min ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
+            return Math.floor(seconds / 86400) + ' days ago';
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
     </script>
 </body>
 </html>
