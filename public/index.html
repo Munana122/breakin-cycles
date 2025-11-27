@@ -2618,7 +2618,12 @@
                 
                 // Add teacher-specific navigation
                 const navLinks = document.getElementById('navLinks');
+                const learnLink = document.querySelector('a[onclick*="learn"]').parentElement;
+                
                 if (user.role === 'teacher') {
+                    // Hide Learn link for teachers
+                    learnLink.style.display = 'none';
+                    
                     const existingTeacherNav = document.getElementById('teacherNav');
                     if (!existingTeacherNav) {
                         const teacherNav = document.createElement('li');
@@ -2632,6 +2637,9 @@
                         navLinks.appendChild(studentNav);
                     }
                 } else {
+                    // Show Learn link for students
+                    learnLink.style.display = 'block';
+                    
                     const teacherNav = document.getElementById('teacherNav');
                     const studentNav = document.getElementById('studentNav');
                     if (teacherNav) teacherNav.remove();
@@ -3071,7 +3079,7 @@
                                 <span>Finish first course module</span>
                             </div>
                         </div>
-                        <button class="btn btn-secondary">Set Learning Goals</button>
+                        <button class="btn btn-secondary" onclick="setLearningGoals()">Set Learning Goals</button>
                     </div>
                     
                     <div class="dashboard-card">
@@ -3079,15 +3087,16 @@
                         <h3>Student Achievements</h3>
                         <p>Celebrate your milestones</p>
                         <div class="achievements">
-                            <div class="achievement-badge earned">
+                            <div class="achievement-badge earned" onclick="showAchievementDetails('First Steps')" style="cursor: pointer;">
                                 <span class="badge-icon">🌟</span>
                                 <span class="badge-name">First Steps</span>
                             </div>
-                            <div class="achievement-badge">
+                            <div class="achievement-badge" onclick="showAchievementDetails('Course Completer')" style="cursor: pointer;">
                                 <span class="badge-icon">🎓</span>
                                 <span class="badge-name">Course Completer</span>
                             </div>
                         </div>
+                        <button class="btn btn-secondary" onclick="showAllAchievements()" style="margin-top: 15px;">View All Achievements</button>
                     </div>
                 `;
             } else if (role === 'teacher') {
@@ -3487,6 +3496,135 @@
             event.preventDefault();
             alert(`${courseName} updated successfully!`);
             event.target.closest('div').parentElement.remove();
+        }
+        
+        function setLearningGoals() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+            
+            overlay.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3 style="color: #667eea; margin: 0;">🎯 Set Learning Goals</h3>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+                    </div>
+                    <form onsubmit="saveLearningGoals(event)">
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Goal Type</label>
+                            <select required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                                <option value="">Select goal type</option>
+                                <option value="course">Complete a Course</option>
+                                <option value="skill">Learn a New Skill</option>
+                                <option value="community">Community Engagement</option>
+                                <option value="career">Career Development</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Goal Description</label>
+                            <textarea required placeholder="Describe your learning goal..." style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 100px;"></textarea>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Target Date</label>
+                            <input type="date" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 600; cursor: pointer;">Set Goal</button>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.remove();
+            });
+        }
+        
+        function saveLearningGoals(event) {
+            event.preventDefault();
+            alert('Learning goal set successfully! Keep working towards it.');
+            event.target.closest('div').parentElement.remove();
+        }
+        
+        function showAchievementDetails(achievementName) {
+            const achievements = {
+                'First Steps': {
+                    description: 'Congratulations on taking your first steps in your learning journey!',
+                    earned: true,
+                    date: '2024-01-15',
+                    requirements: 'Complete profile setup and join the community'
+                },
+                'Course Completer': {
+                    description: 'Complete your first course to unlock this achievement.',
+                    earned: false,
+                    requirements: 'Finish any course with 100% completion rate'
+                }
+            };
+            
+            const achievement = achievements[achievementName];
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+            
+            overlay.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 400px; width: 90%; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">${achievement.earned ? '🎆' : '🔒'}</div>
+                    <h3 style="color: #667eea; margin-bottom: 1rem;">${achievementName}</h3>
+                    <p style="color: #6c757d; margin-bottom: 1.5rem;">${achievement.description}</p>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <strong>Requirements:</strong><br>
+                        <span style="color: #6c757d;">${achievement.requirements}</span>
+                    </div>
+                    ${achievement.earned ? `<p style="color: #28a745; font-weight: 600;">Earned on ${achievement.date}</p>` : '<p style="color: #ffc107; font-weight: 600;">Not yet earned</p>'}
+                    <button onclick="this.closest('div').parentElement.remove()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.75rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer;">Close</button>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.remove();
+            });
+        }
+        
+        function showAllAchievements() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+            
+            overlay.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3 style="color: #667eea; margin: 0;">🏆 All Achievements</h3>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                        <div onclick="showAchievementDetails('First Steps')" style="padding: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 12px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌟</div>
+                            <div style="font-size: 0.9rem; font-weight: 600;">First Steps</div>
+                            <div style="font-size: 0.7rem; opacity: 0.9;">Earned</div>
+                        </div>
+                        <div onclick="showAchievementDetails('Course Completer')" style="padding: 1rem; background: #f8f9fa; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎓</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: #6c757d;">Course Completer</div>
+                            <div style="font-size: 0.7rem; color: #ffc107;">Locked</div>
+                        </div>
+                        <div onclick="showAchievementDetails('Community Leader')" style="padding: 1rem; background: #f8f9fa; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: #6c757d;">Community Leader</div>
+                            <div style="font-size: 0.7rem; color: #ffc107;">Locked</div>
+                        </div>
+                        <div onclick="showAchievementDetails('Mentor')" style="padding: 1rem; background: #f8f9fa; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; cursor: pointer;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💪</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: #6c757d;">Mentor</div>
+                            <div style="font-size: 0.7rem; color: #ffc107;">Locked</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <p style="color: #6c757d; font-size: 0.9rem;">Keep learning and engaging to unlock more achievements!</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.remove();
+            });
         }
 
         document.addEventListener('DOMContentLoaded', initializeFeedbackForm);
