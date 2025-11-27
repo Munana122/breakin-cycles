@@ -26,9 +26,10 @@ app.post('/api/auth/login', (req, res) => {
 
 app.post('/api/auth/register', (req, res) => {
   const { name, email } = req.body;
+  const username = name || email.split('@')[0];
   res.json({
     message: 'Registration successful',
-    user: { name, email, avatar: name.substring(0, 2).toUpperCase() }
+    user: { name: `Hey ${username}`, email, avatar: username.substring(0, 2).toUpperCase() }
   });
 });
 
