@@ -917,22 +917,204 @@
       `;
       document.getElementById('previewModal').style.display = 'block';
     }
+    
+    function viewCourseDetails(courseId) {
+      const course = availableCourses.find(c => c.id === courseId);
+      const enrolledStudents = students.filter(student => student.courses.includes(course.title));
+      
+      document.getElementById('previewContent').innerHTML = `
+        <div style="max-width: 100%; overflow-x: auto;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">📚</div>
+            <div>
+              <h2 style="margin: 0; color: #8b5cf6; font-size: 1.5rem; font-weight: 600;">${course.title}</h2>
+              <p style="margin: 0; color: #6b7280;">Student Progress & Feedback</p>
+            </div>
+          </div>
+          
+          <div style="background: #f8fafc; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="margin: 0 0 1rem 0; color: #374151;">Course Overview</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+              <div style="background: white; padding: 1rem; border-radius: 12px; text-align: center;">
+                <div style="font-size: 1.5rem; font-weight: bold; color: #8b5cf6;">${enrolledStudents.length}</div>
+                <div style="font-size: 0.8rem; color: #6b7280;">Enrolled Students</div>
+              </div>
+              <div style="background: white; padding: 1rem; border-radius: 12px; text-align: center;">
+                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981;">${Math.round(enrolledStudents.reduce((acc, s) => acc + (s.progress[course.title] || 0), 0) / enrolledStudents.length || 0)}%</div>
+                <div style="font-size: 0.8rem; color: #6b7280;">Average Progress</div>
+              </div>
+              <div style="background: white; padding: 1rem; border-radius: 12px; text-align: center;">
+                <div style="font-size: 1.5rem; font-weight: bold; color: #f59e0b;">${course.lessons}</div>
+                <div style="font-size: 0.8rem; color: #6b7280;">Total Lessons</div>
+              </div>
+            </div>
+          </div>
+          
+          <h3 style="margin: 0 0 1rem 0; color: #374151;">Student Progress Details</h3>
+          ${enrolledStudents.map(student => `
+            <div style="background: white; border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid #e5e7eb;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                  <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #8b5cf6, #6366f1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${student.avatar}</div>
+                  <div>
+                    <h4 style="margin: 0; color: #1f2937;">${student.name}</h4>
+                    <p style="margin: 0; color: #6b7280; font-size: 0.9rem;">${student.email}</p>
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-weight: bold; color: #8b5cf6; font-size: 1.1rem;">${student.progress[course.title]}%</div>
+                  <div style="font-size: 0.8rem; color: #6b7280;">Progress</div>
+                </div>
+              </div>
+              
+              <div style="background: #e5e7eb; border-radius: 10px; height: 8px; margin-bottom: 1rem;">
+                <div style="background: linear-gradient(135deg, #8b5cf6, #6366f1); height: 100%; width: ${student.progress[course.title]}%; border-radius: 10px;"></div>
+              </div>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <h5 style="margin: 0 0 0.5rem 0; color: #374151;">Current Learning</h5>
+                  <p style="margin: 0; font-size: 0.9rem; color: #6b7280;">Lesson ${Math.ceil((student.progress[course.title] / 100) * course.lessons)}: ${getLessonTitle(course.title, student.progress[course.title])}</p>
+                </div>
+                <div>
+                  <h5 style="margin: 0 0 0.5rem 0; color: #374151;">Last Activity</h5>
+                  <p style="margin: 0; font-size: 0.9rem; color: #6b7280;">${student.lastActive}</p>
+                </div>
+              </div>
+              
+              <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                <button onclick="viewStudentFeedback('${student.name}', '${course.title}')" style="padding: 0.5rem 1rem; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">📝 View Feedback</button>
+                <button onclick="sendFeedback('${student.name}', '${course.title}')" style="padding: 0.5rem 1rem; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">💬 Send Feedback</button>
+                <button onclick="messageStudent(${student.id})" style="padding: 0.5rem 1rem; background: #f59e0b; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">📧 Message</button>
+              </div>
+            </div>
+          `).join('')}
+          
+          ${enrolledStudents.length === 0 ? '<p style="text-align: center; color: #6b7280; padding: 2rem;">No students enrolled in this course yet.</p>' : ''}
+        </div>
+      `;
+      document.getElementById('previewModal').style.display = 'block';
+    }
+    
+    function getLessonTitle(courseTitle, progress) {
+      const lessons = {
+        'Personal Finance Fundamentals': ['Introduction to Budgeting', 'Saving Strategies', 'Investment Basics', 'Debt Management'],
+        'Digital Marketing Basics': ['Social Media Strategy', 'Content Creation', 'Analytics & Metrics', 'Campaign Management'],
+        'Web Development Fundamentals': ['HTML Basics', 'CSS Styling', 'JavaScript Fundamentals', 'Responsive Design'],
+        'Advanced Investment Strategies': ['Portfolio Theory', 'Risk Management', 'Market Analysis', 'Advanced Trading'],
+        'Starting Your Own Business': ['Business Planning', 'Market Research', 'Funding Options', 'Launch Strategy']
+      };
+      
+      const courseLessons = lessons[courseTitle] || ['Basic Concepts', 'Intermediate Topics', 'Advanced Applications', 'Final Project'];
+      const lessonIndex = Math.min(Math.floor((progress / 100) * courseLessons.length), courseLessons.length - 1);
+      return courseLessons[lessonIndex];
+    }
+    
+    function viewStudentFeedback(studentName, courseTitle) {
+      const feedbacks = [
+        { date: '2 days ago', type: 'Assignment', feedback: 'Great work on the budgeting exercise! Your calculations were accurate and well-presented.' },
+        { date: '1 week ago', type: 'Quiz', feedback: 'Good understanding of basic concepts. Consider reviewing compound interest calculations.' },
+        { date: '2 weeks ago', type: 'Participation', feedback: 'Excellent participation in class discussions. Keep asking thoughtful questions!' }
+      ];
+      
+      document.getElementById('previewContent').innerHTML = `
+        <div style="max-width: 100%;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <button onclick="history.back()" style="background: #6b7280; color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer;">← Back</button>
+            <h2 style="margin: 0; color: #8b5cf6;">Feedback for ${studentName}</h2>
+          </div>
+          
+          <div style="background: #f8fafc; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="margin: 0 0 1rem 0;">Course: ${courseTitle}</h3>
+            
+            ${feedbacks.map(fb => `
+              <div style="background: white; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; border-left: 4px solid #8b5cf6;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="font-weight: 600; color: #374151;">${fb.type}</span>
+                  <span style="font-size: 0.8rem; color: #6b7280;">${fb.date}</span>
+                </div>
+                <p style="margin: 0; color: #6b7280;">${fb.feedback}</p>
+              </div>
+            `).join('')}
+          </div>
+          
+          <button onclick="sendFeedback('${studentName}', '${courseTitle}')" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">📝 Add New Feedback</button>
+        </div>
+      `;
+    }
+    
+    function sendFeedback(studentName, courseTitle) {
+      document.getElementById('previewContent').innerHTML = `
+        <div style="max-width: 100%;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <button onclick="viewStudentFeedback('${studentName}', '${courseTitle}')" style="background: #6b7280; color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer;">← Back</button>
+            <h2 style="margin: 0; color: #8b5cf6;">Send Feedback to ${studentName}</h2>
+          </div>
+          
+          <form onsubmit="submitFeedback(event, '${studentName}', '${courseTitle}')" style="background: #f8fafc; border-radius: 16px; padding: 2rem;">
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151;">Feedback Type</label>
+              <select required style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 12px; background: white;">
+                <option value="">Select Type</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Quiz">Quiz</option>
+                <option value="Participation">Participation</option>
+                <option value="General">General</option>
+              </select>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151;">Feedback Message</label>
+              <textarea required rows="6" placeholder="Write your feedback here..." style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 12px; background: white; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151;">Grade (Optional)</label>
+              <input type="number" min="0" max="100" placeholder="85" style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 12px; background: white;">
+            </div>
+            
+            <button type="submit" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">📤 Send Feedback</button>
+          </form>
+        </div>
+      `;
+    }
+    
+    function submitFeedback(event, studentName, courseTitle) {
+      event.preventDefault();
+      alert(`Feedback sent to ${studentName} for ${courseTitle}!`);
+      viewStudentFeedback(studentName, courseTitle);
+    }
 
     function viewStudentDetails(studentId) {
       const student = students.find(s => s.id === studentId);
       document.getElementById('studentContent').innerHTML = `
-        <h3>${student.name}</h3>
-        <p><strong>Email:</strong> ${student.email}</p>
-        <p><strong>Last Active:</strong> ${student.lastActive}</p>
-        <h4>Course Progress:</h4>
-        ${student.courses.map(course => `
-          <div style="margin: 1rem 0;">
-            <p><strong>${course}:</strong> ${student.progress[course]}%</p>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${student.progress[course]}%"></div>
+        <div style="max-width: 100%;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #6366f1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem;">${student.avatar}</div>
+            <div>
+              <h2 style="margin: 0; color: #1f2937;">${student.name}</h2>
+              <p style="margin: 0; color: #6b7280;">${student.email}</p>
+              <p style="margin: 0; color: #6b7280; font-size: 0.9rem;">Last active: ${student.lastActive}</p>
             </div>
           </div>
-        `).join('')}
+          
+          <h3 style="margin: 0 0 1rem 0; color: #374151;">Course Progress:</h3>
+          ${student.courses.map(course => `
+            <div style="background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h4 style="margin: 0; color: #374151;">${course}</h4>
+                <span style="font-weight: bold; color: #8b5cf6; font-size: 1.1rem;">${student.progress[course]}%</span>
+              </div>
+              <div style="background: #e5e7eb; border-radius: 10px; height: 10px; margin-bottom: 1rem;">
+                <div style="background: linear-gradient(135deg, #8b5cf6, #6366f1); height: 100%; width: ${student.progress[course]}%; border-radius: 10px;"></div>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button onclick="viewStudentFeedback('${student.name}', '${course}')" style="padding: 0.5rem 1rem; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">📝 View Feedback</button>
+                <button onclick="sendFeedback('${student.name}', '${course}')" style="padding: 0.5rem 1rem; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">💬 Send Feedback</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       `;
       document.getElementById('studentModal').style.display = 'block';
     }
