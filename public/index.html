@@ -337,6 +337,22 @@
             color: #7f8c8d;
             font-size: 0.9rem;
         }
+        
+        .platform-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .feature-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
 
         /* Community Section */
         .community-section {
@@ -938,18 +954,24 @@
                 </div>
             </div>
 
-            <!-- Paid Courses Section -->
+            <!-- Premium Learning Platforms -->
             <div class="container">
-                <h2 class="section-title">Paid Courses</h2>
+                <h2 class="section-title">Premium Learning Platforms</h2>
                 <div class="learn-grid">
                     <div class="category-card">
                         <div class="category-header">
                             <div class="category-icon">📚</div>
                             <h3>Khan Academy</h3>
+                            <p class="category-subtitle">Free world-class education</p>
                         </div>
                         <div class="category-content">
                             <p>Access a wide range of courses for free, including math, science, economics, and more.</p>
-                            <a href="https://www.khanacademy.org" class="btn btn-primary" style="width: 100%;">Visit Khan Academy</a>
+                            <div class="platform-features">
+                                <span class="feature-tag">✅ Free</span>
+                                <span class="feature-tag">📊 Progress Tracking</span>
+                                <span class="feature-tag">🏆 Certificates</span>
+                            </div>
+                            <a href="https://www.khanacademy.org" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit Khan Academy</a>
                         </div>
                     </div>
 
@@ -957,10 +979,135 @@
                         <div class="category-header">
                             <div class="category-icon">🎓</div>
                             <h3>Coursera</h3>
+                            <p class="category-subtitle">University-level courses</p>
                         </div>
                         <div class="category-content">
                             <p>Enroll in courses from top universities and organizations worldwide.</p>
-                            <a href="https://www.coursera.org" class="btn btn-primary" style="width: 100%;">Visit Coursera</a>
+                            <div class="platform-features">
+                                <span class="feature-tag">🎓 University Partners</span>
+                                <span class="feature-tag">💰 Financial Aid</span>
+                                <span class="feature-tag">📜 Degrees Available</span>
+                            </div>
+                            <a href="https://www.coursera.org" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit Coursera</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">💻</div>
+                            <h3>Programmiz</h3>
+                            <p class="category-subtitle">Learn programming step by step</p>
+                        </div>
+                        <div class="category-content">
+                            <p>Interactive programming tutorials and courses for beginners to advanced developers.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">🐍 Python</span>
+                                <span class="feature-tag">☕ Java</span>
+                                <span class="feature-tag">⚡ JavaScript</span>
+                            </div>
+                            <a href="https://www.programiz.com" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit Programiz</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">🤖</div>
+                            <h3>DeepLearning.AI</h3>
+                            <p class="category-subtitle">AI & Machine Learning mastery</p>
+                        </div>
+                        <div class="category-content">
+                            <p>Learn AI and machine learning from Andrew Ng and industry experts.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">🧠 Deep Learning</span>
+                                <span class="feature-tag">📊 Data Science</span>
+                                <span class="feature-tag">🤖 AI Applications</span>
+                            </div>
+                            <a href="https://www.deeplearning.ai" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit DeepLearning.AI</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">🚀</div>
+                            <h3>Udemy</h3>
+                            <p class="category-subtitle">Practical skills for real world</p>
+                        </div>
+                        <div class="category-content">
+                            <p>Over 210,000 courses on technology, business, and creative skills.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">💼 Business Skills</span>
+                                <span class="feature-tag">🎨 Creative Arts</span>
+                                <span class="feature-tag">💻 Tech Skills</span>
+                            </div>
+                            <a href="https://www.udemy.com" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit Udemy</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">🎯</div>
+                            <h3>Skillshare</h3>
+                            <p class="category-subtitle">Creative and business skills</p>
+                        </div>
+                        <div class="category-content">
+                            <p>Learn creative skills, business, and technology through project-based classes.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">🎨 Design</span>
+                                <span class="feature-tag">📸 Photography</span>
+                                <span class="feature-tag">✍️ Writing</span>
+                            </div>
+                            <a href="https://www.skillshare.com" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit Skillshare</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">🏢</div>
+                            <h3>LinkedIn Learning</h3>
+                            <p class="category-subtitle">Professional development</p>
+                        </div>
+                        <div class="category-content">
+                            <p>Develop business, technology, and creative skills with expert-led courses.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">💼 Career Growth</span>
+                                <span class="feature-tag">🤝 Networking</span>
+                                <span class="feature-tag">📈 Leadership</span>
+                            </div>
+                            <a href="https://www.linkedin.com/learning" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit LinkedIn Learning</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">🔬</div>
+                            <h3>edX</h3>
+                            <p class="category-subtitle">University-level education</p>
+                        </div>
+                        <div class="category-content">
+                            <p>High-quality courses from Harvard, MIT, and other top institutions.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">🏛️ Top Universities</span>
+                                <span class="feature-tag">🔬 Research-Based</span>
+                                <span class="feature-tag">🆓 Free Audit</span>
+                            </div>
+                            <a href="https://www.edx.org" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit edX</a>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon">💡</div>
+                            <h3>MasterClass</h3>
+                            <p class="category-subtitle">Learn from the best</p>
+                        </div>
+                        <div class="category-content">
+                            <p>Learn from world-renowned experts and celebrities in their fields.</p>
+                            <div class="platform-features">
+                                <span class="feature-tag">⭐ Celebrity Instructors</span>
+                                <span class="feature-tag">🎬 High Production</span>
+                                <span class="feature-tag">🎭 Creative Arts</span>
+                            </div>
+                            <a href="https://www.masterclass.com" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Visit MasterClass</a>
                         </div>
                     </div>
                 </div>
@@ -1455,8 +1602,12 @@
                 <div class="chat-input-wrapper">
                     <input type="text" id="chatInput" placeholder="Share your thoughts, ask questions, or celebrate a win..." onkeypress="handleChatKeyPress(event)">
                     <input type="file" id="fileInput" accept="image/*,video/*" style="display:none" onchange="handleFileUpload(event)">
-                    <button class="attach-btn" onclick="document.getElementById('fileInput').click()">📎</button>
-                    <button class="send-btn" onclick="sendChatMessage()">📤</button>
+                    <button class="attach-btn" onclick="document.getElementById('fileInput').click()" id="attachBtn">📎</button>
+                    <button class="send-btn" onclick="sendChatMessage()" id="sendBtn">📤</button>
+                </div>
+                <div id="joinPrompt" style="display: none; padding: 0.5rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; margin-top: 0.5rem; text-align: center;">
+                    <span style="color: #856404;">You need to join this room to participate in the conversation.</span>
+                    <button onclick="joinCurrentRoom()" style="margin-left: 1rem; padding: 0.3rem 0.8rem; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Join Room</button>
                 </div>
             </div>
         </div>
@@ -1490,6 +1641,89 @@
                 </div>
                 <button type="submit" class="btn-submit">Complete Enrollment</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Course Progress Feedback Modal -->
+    <div id="progressFeedbackModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 20000; overflow-y: auto;">
+        <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem;">
+            <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 450px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto;">
+                <button onclick="closeProgressFeedback()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #6c757d; z-index: 1;">✕</button>
+                
+                <div style="text-align: center; padding: 0 0 1rem 0;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                    <h3 style="color: #667eea; margin: 0 0 0.3rem 0;">Course Progress Feedback</h3>
+                    <p style="color: #6c757d; font-size: 0.9rem; margin: 0;">Help us improve your learning experience</p>
+                </div>
+                
+                <form id="progressFeedbackForm">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">Which course are you rating? *</label>
+                        <select id="feedbackCourse" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white;">
+                            <option value="">Select your course</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">Course Progress</label>
+                        <label style="font-size: 0.85rem; color: #6c757d;">How far along are you?</label>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                            <span style="font-size: 0.8rem; color: #6c757d;">0%</span>
+                            <input type="range" id="progressSlider" min="0" max="100" value="50" style="flex: 1;">
+                            <span id="progressValue" style="font-size: 0.8rem; color: #667eea; font-weight: 600;">50%</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">Rate Your Experience *</label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-size: 0.8rem; color: #6c757d;">Hate</span>
+                            <div class="star-rating" style="display: flex; gap: 0.3rem;">
+                                <span onclick="setRating(1)" data-rating="1" style="font-size: 1.5rem; color: #e2e8f0; cursor: pointer;">⭐</span>
+                                <span onclick="setRating(2)" data-rating="2" style="font-size: 1.5rem; color: #e2e8f0; cursor: pointer;">⭐</span>
+                                <span onclick="setRating(3)" data-rating="3" style="font-size: 1.5rem; color: #e2e8f0; cursor: pointer;">⭐</span>
+                                <span onclick="setRating(4)" data-rating="4" style="font-size: 1.5rem; color: #e2e8f0; cursor: pointer;">⭐</span>
+                                <span onclick="setRating(5)" data-rating="5" style="font-size: 1.5rem; color: #e2e8f0; cursor: pointer;">⭐</span>
+                            </div>
+                            <span style="font-size: 0.8rem; color: #6c757d;">Excellent</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">What have you learned so far? *</label>
+                        <textarea id="learningOutcomes" required placeholder="Share the key concepts, skills, or insights you've gained from this course..." style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white; min-height: 80px; resize: vertical;"></textarea>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                            <span onclick="addSuggestion('New concepts')" style="background: #e3f2fd; color: #1976d2; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.75rem; cursor: pointer;">💡 New concepts</span>
+                            <span onclick="addSuggestion('Practical skills')" style="background: #e8f5e8; color: #388e3c; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.75rem; cursor: pointer;">🛠️ Practical skills</span>
+                            <span onclick="addSuggestion('Real examples')" style="background: #fff3e0; color: #f57c00; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.75rem; cursor: pointer;">📋 Real examples</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">What did you find most helpful?</label>
+                        <textarea id="mostHelpful" placeholder="Examples, videos, exercises, case studies, quizzes, discussions..." style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white; min-height: 60px; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">What could be improved?</label>
+                        <textarea id="improvements" placeholder="Share your suggestions for making this course better..." style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white; min-height: 60px; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568;">Would you recommend this course?</label>
+                        <select id="recommendation" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white;">
+                            <option value="">Select an option</option>
+                            <option value="definitely">Definitely yes</option>
+                            <option value="probably">Probably yes</option>
+                            <option value="maybe">Maybe</option>
+                            <option value="probably-not">Probably not</option>
+                            <option value="definitely-not">Definitely not</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1rem;">Submit Feedback</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -1542,6 +1776,20 @@
             document.getElementById('chatRoomName').textContent = roomName;
             document.getElementById('onlineCount').textContent = Math.floor(roomData.members * 0.15); // 15% online
             
+            // Check if user has joined this room
+            const joinedRooms = JSON.parse(localStorage.getItem('joinedRooms') || '[]');
+            const hasJoined = joinedRooms.includes(roomName);
+            
+            // Update input placeholder based on join status
+            const chatInput = document.getElementById('chatInput');
+            if (hasJoined) {
+                chatInput.placeholder = 'Share your thoughts, ask questions, or celebrate a win...';
+                chatInput.disabled = false;
+            } else {
+                chatInput.placeholder = 'You must join this room to send messages. Click "Join Chat Room" button above.';
+                chatInput.disabled = true;
+            }
+            
             // Clear and populate messages
             const messagesContainer = document.getElementById('chatMessages');
             messagesContainer.innerHTML = '';
@@ -1579,13 +1827,34 @@
             // Scroll to bottom
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
             
+            // Update UI based on join status
+            const joinPrompt = document.getElementById('joinPrompt');
+            const attachBtn = document.getElementById('attachBtn');
+            const sendBtn = document.getElementById('sendBtn');
+            
+            if (hasJoined) {
+                joinPrompt.style.display = 'none';
+                attachBtn.disabled = false;
+                sendBtn.disabled = false;
+                attachBtn.style.opacity = '1';
+                sendBtn.style.opacity = '1';
+            } else {
+                joinPrompt.style.display = 'block';
+                attachBtn.disabled = true;
+                sendBtn.disabled = true;
+                attachBtn.style.opacity = '0.5';
+                sendBtn.style.opacity = '0.5';
+            }
+            
             // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Focus input
+            // Focus input if joined
             setTimeout(() => {
-                document.getElementById('chatInput').focus();
+                if (hasJoined) {
+                    document.getElementById('chatInput').focus();
+                }
             }, 100);
         }
 
@@ -1601,6 +1870,13 @@
         function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
+            const roomName = document.getElementById('chatRoomName').textContent;
+            const joinedRooms = JSON.parse(localStorage.getItem('joinedRooms') || '[]');
+            
+            if (!joinedRooms.includes(roomName)) {
+                alert('You must join this chat room before sending messages!');
+                return;
+            }
             
             if (message) {
                 addMessageToChat('You', 'YOU', message, 'text');
@@ -1610,6 +1886,14 @@
         }
         
         function handleFileUpload(event) {
+            const roomName = document.getElementById('chatRoomName').textContent;
+            const joinedRooms = JSON.parse(localStorage.getItem('joinedRooms') || '[]');
+            
+            if (!joinedRooms.includes(roomName)) {
+                alert('You must join this chat room before sharing files!');
+                return;
+            }
+            
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -1622,6 +1906,14 @@
         }
         
         function addMessageToChat(author, avatar, content, type) {
+            const roomName = document.getElementById('chatRoomName').textContent;
+            const joinedRooms = JSON.parse(localStorage.getItem('joinedRooms') || '[]');
+            
+            if (!joinedRooms.includes(roomName)) {
+                alert('You must join this chat room before sending messages!');
+                return;
+            }
+            
             const messagesContainer = document.getElementById('chatMessages');
             const messageEl = document.createElement('div');
             messageEl.className = 'chat-message';
@@ -1650,7 +1942,6 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
             
             // Save to localStorage
-            const roomName = document.getElementById('chatRoomName').textContent;
             let messages = JSON.parse(localStorage.getItem(`chat_${roomName}`) || '[]');
             messages.push({ author, avatar, content, type, time: new Date().toISOString() });
             localStorage.setItem(`chat_${roomName}`, JSON.stringify(messages));
@@ -1661,6 +1952,45 @@
             if (event.key === 'Enter') {
                 sendChatMessage();
             }
+        }
+        
+        // Join current room from chat interface
+        function joinCurrentRoom() {
+            const roomName = document.getElementById('chatRoomName').textContent;
+            const roomIcon = document.getElementById('chatRoomIcon').textContent;
+            
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                alert('Please login to join chat rooms');
+                return;
+            }
+            
+            let joinedRooms = JSON.parse(localStorage.getItem('joinedRooms') || '[]');
+            
+            if (joinedRooms.length >= 2) {
+                alert('You can only join 2 chat rooms. Leave a room first from your dashboard.');
+                return;
+            }
+            
+            joinedRooms.push(roomName);
+            localStorage.setItem('joinedRooms', JSON.stringify(joinedRooms));
+            
+            // Update UI
+            const chatInput = document.getElementById('chatInput');
+            const joinPrompt = document.getElementById('joinPrompt');
+            const attachBtn = document.getElementById('attachBtn');
+            const sendBtn = document.getElementById('sendBtn');
+            
+            chatInput.placeholder = 'Share your thoughts, ask questions, or celebrate a win...';
+            chatInput.disabled = false;
+            joinPrompt.style.display = 'none';
+            attachBtn.disabled = false;
+            sendBtn.disabled = false;
+            attachBtn.style.opacity = '1';
+            sendBtn.style.opacity = '1';
+            
+            alert(`Successfully joined ${roomName}! You can now send messages.`);
+            chatInput.focus();
         }
 
         // Close modal when clicking outside
@@ -1933,6 +2263,7 @@
                     }
                     joinedRooms.push(roomName);
                     localStorage.setItem('joinedRooms', JSON.stringify(joinedRooms));
+                    alert(`Successfully joined ${roomName}! You can now send messages.`);
                     openChatRoom(roomName, icon, 0);
                 }
             }
@@ -2019,9 +2350,29 @@
             checkAuthStatus();
             
             const targetSection = localStorage.getItem('targetSection');
+            const openChatRoom = localStorage.getItem('openChatRoom');
+            const showProgress = localStorage.getItem('showProgress');
+            
             if (targetSection) {
                 localStorage.removeItem('targetSection');
                 showSection(targetSection);
+                
+                // Show progress details if coming from dashboard
+                if (showProgress === 'true' && targetSection === 'learn') {
+                    localStorage.removeItem('showProgress');
+                    setTimeout(() => {
+                        displayCourseProgress();
+                    }, 500);
+                }
+                
+                // Auto-open chat room if coming from dashboard
+                if (openChatRoom && targetSection === 'community') {
+                    const roomData = JSON.parse(openChatRoom);
+                    localStorage.removeItem('openChatRoom');
+                    setTimeout(() => {
+                        openChatRoom(roomData.name, roomData.icon, 0);
+                    }, 500);
+                }
                 return;
             }
             
@@ -2038,6 +2389,189 @@
                 }, index * 150);
             });
         });
+        
+        function displayCourseProgress() {
+            const enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
+            
+            if (enrollments.length === 0) {
+                alert('No courses enrolled yet. Browse and enroll in courses below!');
+                return;
+            }
+            
+            // Create progress overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            let progressHtml = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3 style="color: #667eea; margin: 0;">📊 Course Progress</h3>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+                    </div>
+            `;
+            
+            enrollments.forEach((enrollment, index) => {
+                const progress = Math.floor(Math.random() * 100);
+                const isCompleted = progress === 100;
+                const isStarted = progress > 0;
+                
+                enrollment.courses.forEach(courseName => {
+                    progressHtml += `
+                        <div style="background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid ${isCompleted ? '#28a745' : isStarted ? '#667eea' : '#6c757d'};">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h4 style="margin: 0; color: #2c3e50;">${courseName}</h4>
+                                <span style="background: ${isCompleted ? '#28a745' : isStarted ? '#667eea' : '#6c757d'}; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">
+                                    ${isCompleted ? '✅ Completed' : isStarted ? `${progress}% In Progress` : '⏸️ Not Started'}
+                                </span>
+                            </div>
+                            
+                            <div style="background: #e9ecef; border-radius: 10px; height: 8px; margin-bottom: 1rem;">
+                                <div style="background: ${isCompleted ? '#28a745' : '#667eea'}; height: 100%; width: ${progress}%; border-radius: 10px; transition: width 0.3s ease;"></div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; margin-bottom: 1rem; font-size: 0.85rem;">
+                                <div><strong>Timeline:</strong> ${enrollment.timeline || '3 months'}</div>
+                                <div><strong>Lessons:</strong> ${Math.floor(progress/10)}/10</div>
+                                <div><strong>Status:</strong> ${isCompleted ? 'Completed' : isStarted ? 'Active' : 'Pending'}</div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button onclick="alert('${isStarted ? 'Continuing' : 'Starting'} ${courseName}...')" style="padding: 0.5rem 1rem; background: ${isCompleted ? '#6c757d' : '#667eea'}; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">
+                                    ${isCompleted ? '🔄 Review' : isStarted ? '▶️ Continue' : '🚀 Start'}
+                                </button>
+                                <button onclick="alert('Viewing ${courseName} details...')" style="padding: 0.5rem 1rem; background: #17a2b8; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">📋 Details</button>
+                                <button onclick="showProgressFeedback('${courseName}')" style="padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">📊 Feedback</button>
+                                ${isCompleted ? '<button onclick="alert(\'Certificate downloaded!\')" style="padding: 0.5rem 1rem; background: #ffc107; color: #212529; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">🏆 Certificate</button>' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            
+            const completedCount = enrollments.reduce((acc, enrollment) => {
+                return acc + enrollment.courses.filter(() => Math.random() > 0.7).length;
+            }, 0);
+            
+            const totalCourses = enrollments.reduce((acc, enrollment) => acc + enrollment.courses.length, 0);
+            
+            progressHtml += `
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                        <h4 style="margin: 0 0 1rem 0;">🎯 Overall Progress</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">${totalCourses}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Enrolled</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">${completedCount}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Completed</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">${Math.floor((completedCount/totalCourses)*100) || 0}%</div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            overlay.innerHTML = progressHtml;
+            document.body.appendChild(overlay);
+            
+            // Close on outside click
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
+        }
+        
+        function showProgressFeedback(courseName = '') {
+            const enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
+            const courseSelect = document.getElementById('feedbackCourse');
+            
+            courseSelect.innerHTML = '<option value="">Select your course</option>';
+            enrollments.forEach(enrollment => {
+                enrollment.courses.forEach(course => {
+                    courseSelect.innerHTML += `<option value="${course}" ${course === courseName ? 'selected' : ''}>${course}</option>`;
+                });
+            });
+            
+            document.getElementById('progressFeedbackModal').style.display = 'block';
+        }
+        
+        function setRating(rating) {
+            document.querySelectorAll('.star').forEach((star, index) => {
+                star.style.color = index < rating ? '#ffc107' : '#e2e8f0';
+            });
+        }
+        
+        function closeProgressFeedback() {
+            document.getElementById('progressFeedbackModal').style.display = 'none';
+        }
+        
+        function addSuggestion(text) {
+            const textarea = document.getElementById('learningOutcomes');
+            if (textarea.value) textarea.value += ', ';
+            textarea.value += text;
+        }
+        
+        // Initialize feedback form functionality
+        function initializeFeedbackForm() {
+            const slider = document.getElementById('progressSlider');
+            const valueDisplay = document.getElementById('progressValue');
+            
+            if (slider && valueDisplay) {
+                slider.addEventListener('input', function() {
+                    valueDisplay.textContent = this.value + '%';
+                });
+            }
+            
+            // Star rating functionality
+            document.querySelectorAll('.star').forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    document.querySelectorAll('.star').forEach((s, index) => {
+                        s.style.color = index < rating ? '#ffc107' : '#e2e8f0';
+                    });
+                });
+            });
+            
+            // Progress feedback form submission
+            const form = document.getElementById('progressFeedbackForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const feedbackData = {
+                        course: document.getElementById('feedbackCourse').value,
+                        progress: document.getElementById('progressSlider').value,
+                        rating: document.querySelector('.star[style*="#ffc107"]')?.dataset.rating || 0,
+                        learningOutcomes: document.getElementById('learningOutcomes').value,
+                        mostHelpful: document.getElementById('mostHelpful').value,
+                        improvements: document.getElementById('improvements').value,
+                        recommendation: document.getElementById('recommendation').value
+                    };
+                    
+                    console.log('Feedback submitted:', feedbackData);
+                    alert('Thank you for your feedback! This helps us improve the learning experience.');
+                    closeProgressFeedback();
+                    this.reset();
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initializeFeedbackForm);
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script>

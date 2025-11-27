@@ -5,17 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard — Breaking Cycles</title>
   <style>
+    :root {
+      --bg-primary: #f5f7fa;
+      --bg-secondary: #c3cfe2;
+      --bg-card: #ffffff;
+      --text-primary: #2c3e50;
+      --text-secondary: #6c757d;
+      --accent-color: #667eea;
+    }
+    
+    [data-theme="dark"] {
+      --bg-primary: #2c3e50;
+      --bg-secondary: #34495e;
+      --bg-card: #34495e;
+      --text-primary: #ecf0f1;
+      --text-secondary: #bdc3c7;
+      --accent-color: #74b9ff;
+    }
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.6;
-      color: #2c3e50;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
       min-height: 100vh;
+      transition: all 0.3s ease;
     }
     
     .header {
-      background: white;
+      background: var(--bg-card);
       padding: 1rem 2rem;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       display: flex;
@@ -26,7 +45,7 @@
     .brand {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #667eea;
+      color: var(--accent-color);
       text-decoration: none;
     }
     
@@ -62,7 +81,7 @@
     }
     
     .welcome {
-      background: white;
+      background: var(--bg-card);
       padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -76,14 +95,14 @@
     }
     
     .card {
-      background: white;
+      background: var(--bg-card);
       padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
     
     .card h3 {
-      color: #667eea;
+      color: var(--accent-color);
       margin-bottom: 1rem;
     }
     
@@ -135,7 +154,7 @@
     
     .profile-greeting h1 {
       margin: 0;
-      color: #2c3e50;
+      color: var(--text-primary);
     }
     
     .settings-btn, .notification-btn {
@@ -190,7 +209,7 @@
       right: -350px;
       width: 350px;
       height: 100vh;
-      background: white;
+      background: var(--bg-card);
       box-shadow: -2px 0 20px rgba(0,0,0,0.15);
       transition: right 0.3s ease;
       z-index: 1000;
@@ -258,13 +277,13 @@
     
     .setting-title {
       font-weight: 600;
-      color: #2c3e50;
+      color: var(--text-primary);
       margin-bottom: 0.2rem;
       font-size: 0.95rem;
     }
     
     .setting-description {
-      color: #6c757d;
+      color: var(--text-secondary);
       font-size: 0.8rem;
     }
     
@@ -296,6 +315,148 @@
     * {
       scrollbar-width: thin;
       scrollbar-color: #667eea #f1f1f1;
+    }
+    
+    /* Toggle Switch Styles */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .toggle-slider {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    input:checked + .toggle-slider:before {
+      transform: translateX(26px);
+    }
+    
+    .toggle-switch-small {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+    
+    .toggle-switch-small input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider-small {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+    }
+    
+    .toggle-slider-small:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .toggle-slider-small {
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+    }
+    
+    input:checked + .toggle-slider-small:before {
+      transform: translateX(20px);
+    }
+    
+    /* Dark Theme */
+    body.dark-theme {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      color: #ecf0f1;
+    }
+    
+    .dark-theme .header {
+      background: #34495e;
+      color: #ecf0f1;
+    }
+    
+    .dark-theme .brand {
+      color: #74b9ff;
+    }
+    
+    .dark-theme .welcome,
+    .dark-theme .card {
+      background: #34495e;
+      color: #ecf0f1;
+    }
+    
+    .dark-theme .card h3 {
+      color: #74b9ff;
+    }
+    
+    .dark-theme .settings-sidebar {
+      background: #2c3e50;
+      color: #ecf0f1;
+    }
+    
+    .dark-theme .setting-item:hover {
+      background-color: #34495e;
+    }
+    
+    .dark-theme input,
+    .dark-theme textarea,
+    .dark-theme select {
+      background: #34495e;
+      color: #ecf0f1;
+      border-color: #4a5568;
+    }
+    
+    .theme-option {
+      transition: all 0.3s ease;
+    }
+    
+    .theme-option.active {
+      border-color: #667eea !important;
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -557,12 +718,12 @@
       <div style="background: #f8f9fa; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
           <div><strong>Email Notifications</strong><br><small style="color: #6c757d;">Receive updates via email</small></div>
-          <label style="position: relative; display: inline-block; width: 50px; height: 24px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea, #764ba2); transition: .4s; border-radius: 24px;"></span></label>
+          <label class="toggle-switch"><input type="checkbox" id="emailNotifications" checked onchange="toggleNotification('email', this.checked)"><span class="toggle-slider"></span></label>
         </div>
         
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div><strong>Push Notifications</strong><br><small style="color: #6c757d;">Device notifications</small></div>
-          <label style="position: relative; display: inline-block; width: 50px; height: 24px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea, #764ba2); transition: .4s; border-radius: 24px;"></span></label>
+          <label class="toggle-switch"><input type="checkbox" id="pushNotifications" checked onchange="toggleNotification('push', this.checked)"><span class="toggle-slider"></span></label>
         </div>
       </div>
 
@@ -570,15 +731,15 @@
         <h4 style="color: #667eea; margin-bottom: 1rem;">Course Alerts</h4>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
           <span>New assignments</span>
-          <label style="position: relative; display: inline-block; width: 40px; height: 20px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #4facfe, #00f2fe); transition: .4s; border-radius: 20px;"></span></label>
+          <label class="toggle-switch-small"><input type="checkbox" id="assignmentAlerts" checked onchange="toggleNotification('assignments', this.checked)"><span class="toggle-slider-small"></span></label>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
           <span>Upcoming deadlines</span>
-          <label style="position: relative; display: inline-block; width: 40px; height: 20px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #4facfe, #00f2fe); transition: .4s; border-radius: 20px;"></span></label>
+          <label class="toggle-switch-small"><input type="checkbox" id="deadlineAlerts" checked onchange="toggleNotification('deadlines', this.checked)"><span class="toggle-slider-small"></span></label>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
           <span>New course releases</span>
-          <label style="position: relative; display: inline-block; width: 40px; height: 20px;"><input type="checkbox" style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px;"></span></label>
+          <label class="toggle-switch-small"><input type="checkbox" id="courseReleaseAlerts" onchange="toggleNotification('courseReleases', this.checked)"><span class="toggle-slider-small"></span></label>
         </div>
       </div>
 
@@ -586,11 +747,11 @@
         <h4 style="color: #667eea; margin-bottom: 1rem;">Community Alerts</h4>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
           <span>Replies to posts</span>
-          <label style="position: relative; display: inline-block; width: 40px; height: 20px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #43e97b, #38f9d7); transition: .4s; border-radius: 20px;"></span></label>
+          <label class="toggle-switch-small"><input type="checkbox" id="replyAlerts" checked onchange="toggleNotification('replies', this.checked)"><span class="toggle-slider-small"></span></label>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
           <span>Mentions</span>
-          <label style="position: relative; display: inline-block; width: 40px; height: 20px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #43e97b, #38f9d7); transition: .4s; border-radius: 20px;"></span></label>
+          <label class="toggle-switch-small"><input type="checkbox" id="mentionAlerts" checked onchange="toggleNotification('mentions', this.checked)"><span class="toggle-slider-small"></span></label>
         </div>
       </div>
 
@@ -657,15 +818,15 @@
       <div style="background: #f8f9fa; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
         <h4 style="color: #667eea; margin-bottom: 1rem;">Theme</h4>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
-          <div onclick="alert('Light theme')" style="padding: 1rem; background: white; border: 2px solid #667eea; border-radius: 12px; text-align: center; cursor: pointer;">
+          <div id="lightTheme" onclick="setTheme('light')" class="theme-option" style="padding: 1rem; background: white; border: 2px solid #667eea; border-radius: 12px; text-align: center; cursor: pointer;">
             <div style="width: 40px; height: 30px; background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 6px; margin: 0 auto 0.5rem;"></div>
             <span style="font-weight: 600;">Light</span>
           </div>
-          <div onclick="alert('Dark theme')" style="padding: 1rem; background: white; border: 2px solid transparent; border-radius: 12px; text-align: center; cursor: pointer;">
+          <div id="darkTheme" onclick="setTheme('dark')" class="theme-option" style="padding: 1rem; background: white; border: 2px solid transparent; border-radius: 12px; text-align: center; cursor: pointer;">
             <div style="width: 40px; height: 30px; background: linear-gradient(135deg, #2c3e50, #34495e); border-radius: 6px; margin: 0 auto 0.5rem;"></div>
             <span style="font-weight: 600;">Dark</span>
           </div>
-          <div onclick="alert('System theme')" style="padding: 1rem; background: white; border: 2px solid transparent; border-radius: 12px; text-align: center; cursor: pointer;">
+          <div id="systemTheme" onclick="setTheme('system')" class="theme-option" style="padding: 1rem; background: white; border: 2px solid transparent; border-radius: 12px; text-align: center; cursor: pointer;">
             <div style="width: 40px; height: 30px; background: linear-gradient(135deg, #ffffff, #2c3e50); border-radius: 6px; margin: 0 auto 0.5rem;"></div>
             <span style="font-weight: 600;">System</span>
           </div>
@@ -789,7 +950,7 @@
         <div id="joinedRooms">
           <p>Join chat rooms to connect with other women.</p>
         </div>
-        <button class="btn" onclick="window.location.href='index.html#community'">Join Community</button>
+        <button class="btn" onclick="goToCommunity()">Join Community Chats</button>
       </div>
     </div>
 
@@ -827,7 +988,7 @@
         <div id="joinedRooms">
           <p>Join chat rooms to connect with other women.</p>
         </div>
-        <button class="btn" onclick="window.location.href='index.html#community'">Join Community</button>
+        <button class="btn" onclick="goToCommunity()">Join Community Chats</button>
       </div>
     </div>
 
@@ -875,6 +1036,11 @@
 
     function goToSection(section) {
       localStorage.setItem('targetSection', section);
+      window.location.href = 'index.html';
+    }
+    
+    function goToCommunity() {
+      localStorage.setItem('targetSection', 'community');
       window.location.href = 'index.html';
     }
     
@@ -987,6 +1153,47 @@
       if (localStorage.getItem('google-linked') === 'true') updateAccountStatus('google', true);
       if (localStorage.getItem('facebook-linked') === 'true') updateAccountStatus('facebook', true);
       if (localStorage.getItem('github-linked') === 'true') updateAccountStatus('github', true);
+    }
+    
+    // Notification Settings
+    function toggleNotification(type, enabled) {
+      localStorage.setItem(`notification_${type}`, enabled);
+      console.log(`${type} notifications ${enabled ? 'enabled' : 'disabled'}`);
+    }
+    
+    function loadNotificationSettings() {
+      const settings = ['email', 'push', 'assignments', 'deadlines', 'courseReleases', 'replies', 'mentions'];
+      settings.forEach(setting => {
+        const saved = localStorage.getItem(`notification_${setting}`);
+        if (saved !== null) {
+          const checkbox = document.getElementById(`${setting}Notifications`) || document.getElementById(`${setting}Alerts`);
+          if (checkbox) checkbox.checked = saved === 'true';
+        }
+      });
+    }
+    
+    // Theme Settings
+    function setTheme(theme) {
+      localStorage.setItem('theme', theme);
+      applyTheme(theme);
+      
+      // Update active theme option
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.style.borderColor = 'transparent';
+        option.classList.remove('active');
+      });
+      document.getElementById(`${theme}Theme`).classList.add('active');
+    }
+    
+    function applyTheme(theme) {
+      const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+    
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      applyTheme(savedTheme);
+      document.getElementById(`${savedTheme}Theme`).classList.add('active');
     }
     
     function showDeleteConfirmation() {
@@ -1291,15 +1498,94 @@
       const roomsDiv = document.getElementById('joinedRooms');
       
       if (joinedRooms.length === 0) {
-        roomsDiv.innerHTML = '<p>No chat rooms joined yet. Connect with your community!</p>';
+        roomsDiv.innerHTML = `
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 2rem; color: white; text-align: center; margin-bottom: 1rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💬</div>
+            <h4 style="margin: 0 0 0.5rem 0; color: white;">Community Chat</h4>
+            <p style="margin: 0 0 1.5rem 0; opacity: 0.9; font-size: 0.9rem;">Connect with other women on their empowerment journey</p>
+            <button onclick="goToCommunity()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); padding: 0.75rem 2rem; border-radius: 25px; cursor: pointer; font-weight: 600; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">+ Join Community Chats</button>
+          </div>
+        `;
       } else {
-        let roomsHtml = '';
+        let roomsHtml = `
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 1.5rem; color: white; margin-bottom: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+              <span style="font-size: 1.5rem;">💬</span>
+              <h4 style="margin: 0; color: white;">Community Chat</h4>
+            </div>
+            <div style="border-left: 3px solid rgba(255,255,255,0.3); padding-left: 1rem; margin-bottom: 1rem;">
+              <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Your Chat Rooms:</p>
+            </div>
+        `;
+        
         joinedRooms.forEach(room => {
-          roomsHtml += `<div style="margin-bottom: 0.5rem; padding: 0.5rem; background: #f0f8ff; border-radius: 8px; display: flex; align-items: center; gap: 0.5rem;">`;
-          roomsHtml += `<span>💬</span> ${room}`;
-          roomsHtml += `</div>`;
+          const roomIcon = getRoomIcon(room);
+          const roomDescription = getRoomDescription(room);
+          roomsHtml += `
+            <div style="background: rgba(255,255,255,0.95); border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <div style="width: 50px; height: 50px; background: #667eea; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white;">${roomIcon}</div>
+                <div style="flex: 1;">
+                  <h5 style="margin: 0 0 0.3rem 0; color: #2c3e50; font-weight: 600;">${room}</h5>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <span style="background: #28a745; color: white; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">✓ Active community</span>
+                  </div>
+                  <p style="margin: 0; color: #6c757d; font-size: 0.85rem;">${roomDescription}</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.75rem;">
+                <button onclick="openChatFromDashboard('${room}', '${roomIcon}')" style="flex: 1; padding: 0.75rem; background: #28a745; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#218838'" onmouseout="this.style.background='#28a745'">● Open Chat</button>
+                <button onclick="leaveChatRoom('${room}')" style="padding: 0.75rem; background: #dc3545; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#c82333'" onmouseout="this.style.background='#dc3545'">✕</button>
+              </div>
+            </div>
+          `;
         });
+        
+        roomsHtml += `
+            <button onclick="goToCommunity()" style="width: 100%; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); padding: 0.75rem; border-radius: 16px; cursor: pointer; font-weight: 600; backdrop-filter: blur(10px); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">+ Join Community Chats</button>
+          </div>
+        `;
+        
         roomsDiv.innerHTML = roomsHtml;
+      }
+    }
+    
+    function getRoomIcon(roomName) {
+      const icons = {
+        'Young Mothers Circle': '👶',
+        'Empowered Abilities': '♿',
+        'Sisters Supporting Sisters': '🤝'
+      };
+      return icons[roomName] || '💬';
+    }
+    
+    function getRoomDescription(roomName) {
+      const descriptions = {
+        'Young Mothers Circle': 'Connect with other moms and share parenting tips',
+        'Empowered Abilities': 'A supportive space for sharing experiences and resources',
+        'Sisters Supporting Sisters': 'Main community for all women supporting each other'
+      };
+      return descriptions[roomName] || 'A supportive community space';
+    }
+    
+    function openChatFromDashboard(roomName, icon) {
+      // Store the room info and redirect to community page
+      localStorage.setItem('openChatRoom', JSON.stringify({name: roomName, icon: icon}));
+      localStorage.setItem('targetSection', 'community');
+      window.location.href = 'index.html';
+    }
+    
+    function leaveChatRoom(roomName) {
+      if (confirm(`Are you sure you want to leave ${roomName}?`)) {
+        let joinedRooms = JSON.parse(localStorage.getItem('joinedRooms') || '[]');
+        joinedRooms = joinedRooms.filter(room => room !== roomName);
+        localStorage.setItem('joinedRooms', JSON.stringify(joinedRooms));
+        
+        // Clear any saved messages for this room
+        localStorage.removeItem(`chat_${roomName}`);
+        
+        loadJoinedRooms();
+        alert(`Left ${roomName} successfully.`);
       }
     }
 
@@ -1520,62 +1806,9 @@
     function takeQuiz() { alert('Opening quiz interface...'); }
     function showFavoriteCourses() { alert('Showing favorite courses...'); }
     function showProgressDetails() {
-      const enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
-      if (enrollments.length === 0) {
-        showModal('Progress Summary', `
-          <div style="text-align: center; padding: 2rem;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-            <h4 style="margin-bottom: 1rem;">No Courses Enrolled</h4>
-            <p style="color: #6c757d; margin-bottom: 2rem;">Start your learning journey by enrolling in a course!</p>
-            <button onclick="closeModal(); showSection('learn')" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer;">Browse Courses</button>
-          </div>
-        `);
-        return;
-      }
-      
-      const course = enrollments[0];
-      const progress = Math.floor(Math.random() * 100);
-      const isStarted = progress > 0;
-      
-      showModal('Progress Summary', `
-        <div style="padding: 1rem;">
-          <h4 style="color: #667eea; margin-bottom: 1.5rem;">${course.courses[0]}</h4>
-          
-          <div style="margin-bottom: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span style="font-weight: 600;">Progress</span>
-              <span style="color: #667eea; font-weight: 600;">${progress}%</span>
-            </div>
-            <div style="background: #e9ecef; border-radius: 10px; height: 12px; margin-bottom: 0.5rem;">
-              <div style="background: linear-gradient(135deg, #667eea, #764ba2); height: 100%; width: ${progress}%; border-radius: 10px; transition: width 0.3s ease;"></div>
-            </div>
-            <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 1rem;">${isStarted ? `You are ${progress}% through this course. Keep going!` : 'You have not started this course yet.'}</p>
-            <button onclick="${isStarted ? 'alert("Continuing course...")' : 'alert("Starting course...")'}" style="width: 100%; padding: 0.75rem; background: ${isStarted ? '#28a745' : '#667eea'}; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">${isStarted ? 'Continue Course' : 'Start Course'}</button>
-          </div>
-          
-          <div>
-            <h5 style="color: #667eea; margin-bottom: 1rem;">Course Structure</h5>
-            <div style="background: #f8f9fa; border-radius: 8px; padding: 1rem;">
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #e9ecef;">
-                <span>• Introduction</span>
-                <span style="color: ${progress > 10 ? '#28a745' : '#6c757d'}; font-size: 0.8rem;">${progress > 10 ? '1/1' : '0/1'} completed</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #e9ecef;">
-                <span>• Lesson 1</span>
-                <span style="color: ${progress > 30 ? '#28a745' : '#6c757d'}; font-size: 0.8rem;">${progress > 30 ? '3/3' : progress > 10 ? '1/3' : '0/3'} completed</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #e9ecef;">
-                <span>• Lesson 2</span>
-                <span style="color: ${progress > 60 ? '#28a745' : '#6c757d'}; font-size: 0.8rem;">${progress > 60 ? '4/4' : progress > 30 ? '2/4' : '0/4'} completed</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
-                <span style="color: ${progress < 80 ? '#6c757d' : '#2c3e50'};• Final Quiz</span>
-                <span style="color: ${progress >= 80 ? '#28a745' : '#dc3545'}; font-size: 0.8rem;">${progress >= 80 ? 'completed' : 'locked'}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      `);
+      localStorage.setItem('targetSection', 'learn');
+      localStorage.setItem('showProgress', 'true');
+      window.location.href = 'index.html';
     }
     function showCertificates() { alert('Showing all certificates...'); }
     function downloadCertificate(id) { alert('Downloading certificate...'); }
@@ -1591,6 +1824,16 @@
     loadJoinedRooms();
     loadProfileAvatar();
     loadConnectedAccounts();
+    loadNotificationSettings();
+    loadTheme();
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'system') {
+        applyTheme('system');
+      }
+    });
   </script>
 </body>
 </html>
