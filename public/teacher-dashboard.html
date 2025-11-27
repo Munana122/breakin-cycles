@@ -30,31 +30,101 @@
       text-decoration: none;
     }
     
+    .nav-tabs {
+      display: flex;
+      gap: 1rem;
+      background: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .nav-tab {
+      padding: 1rem 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #6c757d;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-tab.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+    
     .container {
       max-width: 1200px;
       margin: 2rem auto;
       padding: 0 2rem;
     }
     
-    .welcome {
+    .section {
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+    }
+    
+    .filters {
       background: white;
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .filter-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .filter-group select,
+    .filter-group input {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      min-width: 150px;
     }
     
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
     }
     
     .card {
       background: white;
-      padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-2px);
+    }
+    
+    .card-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
     }
     
     .btn {
@@ -64,114 +134,655 @@
       padding: 0.75rem 1.5rem;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
     }
     
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    .btn:hover {
+      transform: translateY(-1px);
     }
     
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+    .btn-secondary {
+      background: #6c757d;
+    }
+    
+    .btn-success {
+      background: #28a745;
+    }
+    
+    .btn-danger {
+      background: #dc3545;
+    }
+    
+    .student-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: white;
       border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
     }
     
-    ::-webkit-scrollbar-thumb {
+    .student-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
       background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .student-info {
+      flex: 1;
+    }
+    
+    .student-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .progress-bar {
+      background: #e9ecef;
       border-radius: 10px;
+      height: 8px;
+      margin: 0.5rem 0;
     }
     
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #5a6fd8, #6a42a0);
+    .progress-fill {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.3s ease;
     }
     
-    /* Firefox */
-    * {
-      scrollbar-width: thin;
-      scrollbar-color: #667eea #f1f1f1;
+    .resource-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .resource-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .close {
+      float: right;
+      font-size: 1.5rem;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <header class="header">
-    <a href="#" class="brand">🌟 Breaking Cycles - Teacher</a>
+    <a href="dashboard.html" class="brand">🌟 Breaking Cycles - Teacher</a>
     <div>
-      <button class="btn" onclick="logout()">Logout</button>
+      <button onclick="logout()" class="btn btn-secondary">Logout</button>
     </div>
   </header>
 
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('courses')">📚 Choose Courses to Teach</button>
+    <button class="nav-tab" onclick="showSection('students')">👥 View Students</button>
+    <button class="nav-tab" onclick="showSection('resources')">📖 View Resources</button>
+  </nav>
+
   <div class="container">
-    <div class="welcome">
-      <h1>Teacher Dashboard</h1>
-      <p>Welcome! Choose which courses you'd like to teach and help empower women through education.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>📚 Teach Courses</h3>
-        <p>Select courses you want to teach from our available categories.</p>
-        <button class="btn" onclick="showCourseSelection()">Choose Courses to Teach</button>
+    <!-- Courses Section -->
+    <section id="courses" class="section active">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Search Courses</label>
+          <input type="text" id="courseSearch" placeholder="Search courses..." onkeyup="filterCourses()">
+        </div>
+        <div class="filter-group">
+          <label>Category</label>
+          <select id="categoryFilter" onchange="filterCourses()">
+            <option value="">All Categories</option>
+            <option value="Financial Literacy">Financial Literacy</option>
+            <option value="Life Skills">Life Skills</option>
+            <option value="Career Development">Career Development</option>
+            <option value="Technology">Technology</option>
+            <option value="Entrepreneurship">Entrepreneurship</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Difficulty</label>
+          <select id="difficultyFilter" onchange="filterCourses()">
+            <option value="">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Duration</label>
+          <select id="durationFilter" onchange="filterCourses()">
+            <option value="">Any Duration</option>
+            <option value="short">Short (1-4 weeks)</option>
+            <option value="medium">Medium (1-3 months)</option>
+            <option value="long">Long (3+ months)</option>
+          </select>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>👥 My Students</h3>
-        <p>View and manage students enrolled in your courses.</p>
-        <button class="btn" onclick="viewStudents()">View Students</button>
+      <div class="grid" id="coursesGrid"></div>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn" onclick="saveSelectedCourses()">Save Selected Courses</button>
+      </div>
+    </section>
+
+    <!-- Students Section -->
+    <section id="students" class="section">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Search Students</label>
+          <input type="text" id="studentSearch" placeholder="Search students..." onkeyup="filterStudents()">
+        </div>
+        <div class="filter-group">
+          <label>Course</label>
+          <select id="courseFilterStudents" onchange="filterStudents()">
+            <option value="">All Courses</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Progress</label>
+          <select id="progressFilter" onchange="filterStudents()">
+            <option value="">All Progress</option>
+            <option value="low">Low (0-30%)</option>
+            <option value="medium">Medium (31-70%)</option>
+            <option value="high">High (71-100%)</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Activity</label>
+          <select id="activityFilter" onchange="filterStudents()">
+            <option value="">All Students</option>
+            <option value="active">Active (Last 7 days)</option>
+            <option value="inactive">Inactive (7+ days)</option>
+          </select>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>📊 Teaching Resources</h3>
-        <p>Access teaching materials and resources for your courses.</p>
-        <button class="btn" onclick="viewResources()">View Resources</button>
+      <div id="studentsGrid"></div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="section">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Search Resources</label>
+          <input type="text" id="resourceSearch" placeholder="Search resources..." onkeyup="filterResources()">
+        </div>
+        <div class="filter-group">
+          <label>Course</label>
+          <select id="courseFilterResources" onchange="filterResources()">
+            <option value="">All Courses</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Type</label>
+          <select id="typeFilter" onchange="filterResources()">
+            <option value="">All Types</option>
+            <option value="lesson">Lesson Plans</option>
+            <option value="slides">Slides</option>
+            <option value="video">Videos</option>
+            <option value="worksheet">Worksheets</option>
+            <option value="assessment">Assessments</option>
+          </select>
+        </div>
+        <div style="margin-left: auto;">
+          <button class="btn" onclick="uploadResource()">📤 Upload Resource</button>
+        </div>
       </div>
+
+      <div id="resourcesGrid"></div>
+    </section>
+  </div>
+
+  <!-- Modals -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('previewModal')">&times;</span>
+      <div id="previewContent"></div>
     </div>
   </div>
 
-  <!-- Course Selection Modal -->
-  <div id="courseModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000;">
-    <div style="background:white; margin:5% auto; padding:2rem; width:80%; max-width:600px; border-radius:10px;">
-      <h3>Select Courses to Teach</h3>
-      <div id="courseOptions">
-        <label><input type="checkbox" value="Financial Literacy"> Financial Literacy</label><br>
-        <label><input type="checkbox" value="Coding & Tech"> Coding & Tech</label><br>
-        <label><input type="checkbox" value="Entrepreneurship"> Entrepreneurship</label><br>
-        <label><input type="checkbox" value="Beauty & Wellness"> Beauty & Wellness</label><br>
-      </div>
-      <button class="btn" onclick="saveTeachingCourses()">Save Selection</button>
-      <button class="btn" onclick="closeCourseModal()" style="background:#95a5a6;">Cancel</button>
+  <div id="studentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('studentModal')">&times;</span>
+      <div id="studentContent"></div>
     </div>
   </div>
 
   <script>
-    function showCourseSelection() {
-      document.getElementById('courseModal').style.display = 'block';
+    // Sample data
+    const availableCourses = [
+      {
+        id: 1,
+        title: "Personal Finance Fundamentals",
+        description: "Learn budgeting, saving, and basic investment principles",
+        category: "Financial Literacy",
+        difficulty: "Beginner",
+        duration: "6 weeks",
+        lessons: 12,
+        enrolled: 45,
+        selected: false
+      },
+      {
+        id: 2,
+        title: "Advanced Investment Strategies",
+        description: "Portfolio management and advanced financial planning",
+        category: "Financial Literacy",
+        difficulty: "Advanced",
+        duration: "12 weeks",
+        lessons: 24,
+        enrolled: 23,
+        selected: false
+      },
+      {
+        id: 3,
+        title: "Digital Marketing Basics",
+        description: "Social media marketing and online business promotion",
+        category: "Career Development",
+        difficulty: "Beginner",
+        duration: "8 weeks",
+        lessons: 16,
+        enrolled: 67,
+        selected: false
+      },
+      {
+        id: 4,
+        title: "Web Development Fundamentals",
+        description: "HTML, CSS, and JavaScript for beginners",
+        category: "Technology",
+        difficulty: "Beginner",
+        duration: "16 weeks",
+        lessons: 32,
+        enrolled: 89,
+        selected: false
+      },
+      {
+        id: 5,
+        title: "Starting Your Own Business",
+        description: "From idea to launch - complete entrepreneurship guide",
+        category: "Entrepreneurship",
+        difficulty: "Intermediate",
+        duration: "10 weeks",
+        lessons: 20,
+        enrolled: 34,
+        selected: false
+      }
+    ];
+
+    const students = [
+      {
+        id: 1,
+        name: "Sarah Johnson",
+        email: "sarah.j@email.com",
+        avatar: "SJ",
+        courses: ["Personal Finance Fundamentals", "Digital Marketing Basics"],
+        progress: { "Personal Finance Fundamentals": 85, "Digital Marketing Basics": 62 },
+        lastActive: "2 days ago",
+        status: "active"
+      },
+      {
+        id: 2,
+        name: "Maria Rodriguez",
+        email: "maria.r@email.com",
+        avatar: "MR",
+        courses: ["Web Development Fundamentals"],
+        progress: { "Web Development Fundamentals": 45 },
+        lastActive: "1 day ago",
+        status: "active"
+      },
+      {
+        id: 3,
+        name: "Aisha Patel",
+        email: "aisha.p@email.com",
+        avatar: "AP",
+        courses: ["Starting Your Own Business", "Personal Finance Fundamentals"],
+        progress: { "Starting Your Own Business": 78, "Personal Finance Fundamentals": 92 },
+        lastActive: "5 hours ago",
+        status: "active"
+      }
+    ];
+
+    const resources = [
+      {
+        id: 1,
+        name: "Budget Planning Template",
+        type: "worksheet",
+        course: "Personal Finance Fundamentals",
+        size: "2.3 MB",
+        format: "PDF",
+        downloads: 156
+      },
+      {
+        id: 2,
+        name: "Investment Basics Presentation",
+        type: "slides",
+        course: "Personal Finance Fundamentals",
+        size: "8.7 MB",
+        format: "PPTX",
+        downloads: 89
+      },
+      {
+        id: 3,
+        name: "HTML Basics Video Tutorial",
+        type: "video",
+        course: "Web Development Fundamentals",
+        size: "45.2 MB",
+        format: "MP4",
+        downloads: 234
+      }
+    ];
+
+    function showSection(section) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      
+      document.getElementById(section).classList.add('active');
+      event.target.classList.add('active');
+      
+      if (section === 'courses') loadCourses();
+      if (section === 'students') loadStudents();
+      if (section === 'resources') loadResources();
     }
 
-    function closeCourseModal() {
-      document.getElementById('courseModal').style.display = 'none';
+    function loadCourses() {
+      const grid = document.getElementById('coursesGrid');
+      grid.innerHTML = availableCourses.map(course => `
+        <div class="card course-card" data-category="${course.category}" data-difficulty="${course.difficulty}" data-duration="${getDurationCategory(course.duration)}">
+          <div class="card-header">
+            <h3>${course.title}</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+              <span>${course.category}</span>
+              <label style="display: flex; align-items: center; gap: 0.5rem;">
+                <input type="checkbox" ${course.selected ? 'checked' : ''} onchange="toggleCourse(${course.id})">
+                <span>Select to Teach</span>
+              </label>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>${course.description}</p>
+            <div style="margin: 1rem 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; font-size: 0.9rem;">
+              <div><strong>Duration:</strong> ${course.duration}</div>
+              <div><strong>Lessons:</strong> ${course.lessons}</div>
+              <div><strong>Difficulty:</strong> ${course.difficulty}</div>
+              <div><strong>Students:</strong> ${course.enrolled}</div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn" onclick="previewCourse(${course.id})">👁️ Preview</button>
+              <button class="btn btn-secondary" onclick="viewCourseDetails(${course.id})">📋 Details</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
 
-    function saveTeachingCourses() {
-      const selected = Array.from(document.querySelectorAll('#courseOptions input:checked')).map(cb => cb.value);
-      localStorage.setItem('teachingCourses', JSON.stringify(selected));
-      alert('Teaching courses saved: ' + selected.join(', '));
-      closeCourseModal();
+    function loadStudents() {
+      const grid = document.getElementById('studentsGrid');
+      grid.innerHTML = students.map(student => `
+        <div class="student-card" data-courses="${student.courses.join(',')}" data-status="${student.status}">
+          <div class="student-avatar">${student.avatar}</div>
+          <div class="student-info">
+            <h4>${student.name}</h4>
+            <p>${student.email}</p>
+            <div style="margin: 0.5rem 0;">
+              ${student.courses.map(course => `
+                <div style="margin: 0.25rem 0;">
+                  <small><strong>${course}:</strong> ${student.progress[course]}%</small>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${student.progress[course]}%"></div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <small>Last active: ${student.lastActive}</small>
+          </div>
+          <div class="student-actions">
+            <button class="btn" onclick="messageStudent(${student.id})">💬</button>
+            <button class="btn btn-secondary" onclick="viewStudentDetails(${student.id})">👁️</button>
+          </div>
+        </div>
+      `).join('');
     }
 
-    function viewStudents() {
-      alert('Students management feature coming soon!');
+    function loadResources() {
+      const grid = document.getElementById('resourcesGrid');
+      grid.innerHTML = `
+        <div style="display: grid; gap: 1rem;">
+          ${resources.map(resource => `
+            <div class="resource-item" data-type="${resource.type}" data-course="${resource.course}">
+              <div class="resource-info">
+                <div class="resource-icon" style="background: ${getResourceColor(resource.type)};">
+                  ${getResourceIcon(resource.type)}
+                </div>
+                <div>
+                  <h4>${resource.name}</h4>
+                  <p>${resource.course} • ${resource.format} • ${resource.size}</p>
+                  <small>${resource.downloads} downloads</small>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn" onclick="downloadResource(${resource.id})">📥 Download</button>
+                <button class="btn btn-secondary" onclick="shareResource(${resource.id})">🔗 Share</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
 
-    function viewResources() {
-      alert('Teaching resources feature coming soon!');
+    function toggleCourse(courseId) {
+      const course = availableCourses.find(c => c.id === courseId);
+      course.selected = !course.selected;
+    }
+
+    function filterCourses() {
+      const search = document.getElementById('courseSearch').value.toLowerCase();
+      const category = document.getElementById('categoryFilter').value;
+      const difficulty = document.getElementById('difficultyFilter').value;
+      const duration = document.getElementById('durationFilter').value;
+
+      document.querySelectorAll('.course-card').forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const cardCategory = card.dataset.category;
+        const cardDifficulty = card.dataset.difficulty;
+        const cardDuration = card.dataset.duration;
+
+        const matchesSearch = title.includes(search);
+        const matchesCategory = !category || cardCategory === category;
+        const matchesDifficulty = !difficulty || cardDifficulty === difficulty;
+        const matchesDuration = !duration || cardDuration === duration;
+
+        card.style.display = matchesSearch && matchesCategory && matchesDifficulty && matchesDuration ? 'block' : 'none';
+      });
+    }
+
+    function filterStudents() {
+      const search = document.getElementById('studentSearch').value.toLowerCase();
+      const course = document.getElementById('courseFilterStudents').value;
+      const progress = document.getElementById('progressFilter').value;
+      const activity = document.getElementById('activityFilter').value;
+
+      document.querySelectorAll('.student-card').forEach(card => {
+        const name = card.querySelector('h4').textContent.toLowerCase();
+        const courses = card.dataset.courses;
+        const status = card.dataset.status;
+
+        const matchesSearch = name.includes(search);
+        const matchesCourse = !course || courses.includes(course);
+        const matchesActivity = !activity || status === activity;
+
+        card.style.display = matchesSearch && matchesCourse && matchesActivity ? 'flex' : 'none';
+      });
+    }
+
+    function filterResources() {
+      const search = document.getElementById('resourceSearch').value.toLowerCase();
+      const course = document.getElementById('courseFilterResources').value;
+      const type = document.getElementById('typeFilter').value;
+
+      document.querySelectorAll('.resource-item').forEach(item => {
+        const name = item.querySelector('h4').textContent.toLowerCase();
+        const itemCourse = item.dataset.course;
+        const itemType = item.dataset.type;
+
+        const matchesSearch = name.includes(search);
+        const matchesCourse = !course || itemCourse === course;
+        const matchesType = !type || itemType === type;
+
+        item.style.display = matchesSearch && matchesCourse && matchesType ? 'flex' : 'none';
+      });
+    }
+
+    function getDurationCategory(duration) {
+      const weeks = parseInt(duration);
+      if (weeks <= 4) return 'short';
+      if (weeks <= 12) return 'medium';
+      return 'long';
+    }
+
+    function getResourceColor(type) {
+      const colors = {
+        lesson: '#667eea',
+        slides: '#f39c12',
+        video: '#e74c3c',
+        worksheet: '#27ae60',
+        assessment: '#9b59b6'
+      };
+      return colors[type] || '#6c757d';
+    }
+
+    function getResourceIcon(type) {
+      const icons = {
+        lesson: '📋',
+        slides: '📊',
+        video: '🎥',
+        worksheet: '📝',
+        assessment: '📊'
+      };
+      return icons[type] || '📄';
+    }
+
+    function previewCourse(courseId) {
+      const course = availableCourses.find(c => c.id === courseId);
+      document.getElementById('previewContent').innerHTML = `
+        <h3>${course.title}</h3>
+        <p><strong>Description:</strong> ${course.description}</p>
+        <p><strong>Category:</strong> ${course.category}</p>
+        <p><strong>Difficulty:</strong> ${course.difficulty}</p>
+        <p><strong>Duration:</strong> ${course.duration} (${course.lessons} lessons)</p>
+        <p><strong>Current Enrollment:</strong> ${course.enrolled} students</p>
+        <h4>Sample Lessons:</h4>
+        <ul>
+          <li>Lesson 1: Introduction to ${course.title}</li>
+          <li>Lesson 2: Basic Concepts</li>
+          <li>Lesson 3: Practical Applications</li>
+        </ul>
+      `;
+      document.getElementById('previewModal').style.display = 'block';
+    }
+
+    function viewStudentDetails(studentId) {
+      const student = students.find(s => s.id === studentId);
+      document.getElementById('studentContent').innerHTML = `
+        <h3>${student.name}</h3>
+        <p><strong>Email:</strong> ${student.email}</p>
+        <p><strong>Last Active:</strong> ${student.lastActive}</p>
+        <h4>Course Progress:</h4>
+        ${student.courses.map(course => `
+          <div style="margin: 1rem 0;">
+            <p><strong>${course}:</strong> ${student.progress[course]}%</p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${student.progress[course]}%"></div>
+            </div>
+          </div>
+        `).join('')}
+      `;
+      document.getElementById('studentModal').style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    function saveSelectedCourses() {
+      const selected = availableCourses.filter(c => c.selected);
+      alert(`Selected ${selected.length} courses to teach: ${selected.map(c => c.title).join(', ')}`);
+    }
+
+    function messageStudent(studentId) {
+      alert('Opening message interface...');
+    }
+
+    function downloadResource(resourceId) {
+      alert('Downloading resource...');
+    }
+
+    function shareResource(resourceId) {
+      alert('Sharing resource...');
+    }
+
+    function uploadResource() {
+      alert('Opening upload interface...');
     }
 
     function logout() {
       localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
       window.location.href = 'login.html';
     }
+
+    // Initialize
+    loadCourses();
   </script>
 </body>
 </html>

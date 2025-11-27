@@ -12,6 +12,10 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.post('/api/auth/login', (req, res) => {
   const { email, password } = req.body;
   const username = email.split('@')[0];
+  
+  // Check if it's a teacher account (you can modify this logic)
+  const isTeacher = email.includes('teacher') || email.includes('instructor');
+  
   res.json({
     message: 'Login successful',
     token: 'mock-token',
@@ -19,7 +23,8 @@ app.post('/api/auth/login', (req, res) => {
       id: 'mock-user',
       name: `Hey ${username}`,
       email: email,
-      avatar: username.substring(0, 2).toUpperCase()
+      avatar: username.substring(0, 2).toUpperCase(),
+      role: isTeacher ? 'teacher' : 'student'
     }
   });
 });

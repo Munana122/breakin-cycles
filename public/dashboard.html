@@ -1318,11 +1318,9 @@
       const userRole = user.role || 'student';
       
       if (userRole === 'teacher') {
-        document.getElementById('teacher-dashboard').style.display = 'grid';
-        document.getElementById('student-dashboard').style.display = 'none';
-        loadTeacherCourses();
-        loadStudentManagement();
-        loadCourseAnalytics();
+        // Redirect to dedicated teacher dashboard
+        window.location.href = 'teacher-dashboard.html';
+        return;
       } else {
         document.getElementById('student-dashboard').style.display = 'grid';
         document.getElementById('teacher-dashboard').style.display = 'none';
