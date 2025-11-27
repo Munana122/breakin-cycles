@@ -1023,7 +1023,7 @@
                 <span style="font-size: 2rem; margin-right: 0.5rem;">☀️</span>
                 Breaking Cycles
             </div>
-            <ul class="nav-links" style="display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0;">
+            <ul class="nav-links" id="navLinks" style="display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0;">
                 <li><a href="#home" class="nav-link active" onclick="checkAuthAndNavigate('home')">Home</a></li>
                 <li><a href="#learn" class="nav-link" onclick="checkAuthAndNavigate('learn')">Learn</a></li>
                 <li><a href="#community" class="nav-link" onclick="checkAuthAndNavigate('community')">Community</a></li>
@@ -2615,6 +2615,28 @@
                 authButtons.style.display = 'none';
                 userInfo.style.display = 'flex';
                 userName.textContent = `${user.name} (${user.role})`;
+                
+                // Add teacher-specific navigation
+                const navLinks = document.getElementById('navLinks');
+                if (user.role === 'teacher') {
+                    const existingTeacherNav = document.getElementById('teacherNav');
+                    if (!existingTeacherNav) {
+                        const teacherNav = document.createElement('li');
+                        teacherNav.id = 'teacherNav';
+                        teacherNav.innerHTML = '<a href="#" class="nav-link" onclick="showMyCourses()" style="color: #8B7CF6; font-weight: 600;">📚 My Courses</a>';
+                        navLinks.appendChild(teacherNav);
+                        
+                        const studentNav = document.createElement('li');
+                        studentNav.id = 'studentNav';
+                        studentNav.innerHTML = '<a href="#" class="nav-link" onclick="showStudentManagement()" style="color: #8B7CF6; font-weight: 600;">👥 Students</a>';
+                        navLinks.appendChild(studentNav);
+                    }
+                } else {
+                    const teacherNav = document.getElementById('teacherNav');
+                    const studentNav = document.getElementById('studentNav');
+                    if (teacherNav) teacherNav.remove();
+                    if (studentNav) studentNav.remove();
+                }
             } else {
                 authButtons.style.display = 'flex';
                 userInfo.style.display = 'none';
@@ -3252,6 +3274,92 @@
         function showTeacherProfile() {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             alert(`Teacher Profile: ${user.name}\n\nStats:\n- 156 Students Taught\n- 12 Courses Created\n- 4.9⭐ Rating\n- 2.5k Hours Taught\n\nAchievements: Top Mentor, Knowledge Sharer, Community Leader`);
+        }
+        
+        function messageStudent(studentName) {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+            
+            overlay.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3 style="color: #667eea; margin: 0;">💬 Message ${studentName}</h3>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+                    </div>
+                    <form onsubmit="sendStudentMessage(event, '${studentName}')">
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Subject</label>
+                            <input type="text" required placeholder="e.g., Course Progress Check-in" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Message</label>
+                            <textarea required placeholder="Hi ${studentName}, I wanted to check in on your progress..." style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 120px;"></textarea>
+                        </div>
+                        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 600; cursor: pointer;">Send Message</button>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.remove();
+            });
+        }
+        
+        function sendStudentMessage(event, studentName) {
+            event.preventDefault();
+            alert(`Message sent to ${studentName} successfully!`);
+            event.target.closest('div').parentElement.remove();
+        }
+        
+        function showMyCourses() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+            
+            overlay.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3 style="color: #667eea; margin: 0;">📚 Courses I'm Teaching</h3>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+                    </div>
+                    <div class="course-list">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 1rem; background: #f8f9fa;">
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #2c3e50;">📊 Financial Literacy Fundamentals</h4>
+                                <p style="margin: 0 0 0.5rem 0; color: #6c757d;">24 students enrolled • 89% completion rate</p>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span style="background: #28a745; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Published</span>
+                                    <span style="background: #17a2b8; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">8 hours</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button onclick="alert('Viewing course analytics...')" style="padding: 0.5rem 1rem; background: #17a2b8; color: white; border: none; border-radius: 8px; cursor: pointer;">Analytics</button>
+                                <button onclick="alert('Editing course content...')" style="padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">Edit</button>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 1rem; background: #f8f9fa;">
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #2c3e50;">💻 Web Development Basics</h4>
+                                <p style="margin: 0 0 0.5rem 0; color: #6c757d;">18 students enrolled • 67% completion rate</p>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span style="background: #ffc107; color: #212529; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Draft</span>
+                                    <span style="background: #17a2b8; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">12 hours</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button onclick="alert('Viewing course analytics...')" style="padding: 0.5rem 1rem; background: #17a2b8; color: white; border: none; border-radius: 8px; cursor: pointer;">Analytics</button>
+                                <button onclick="alert('Editing course content...')" style="padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="showContentCreation(); this.closest('div').parentElement.remove();" style="width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 1rem;">+ Create New Course</button>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.remove();
+            });
         }
 
         document.addEventListener('DOMContentLoaded', initializeFeedbackForm);
