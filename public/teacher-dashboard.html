@@ -268,6 +268,7 @@
 
   <nav class="nav-tabs">
     <button class="nav-tab active" onclick="showSection('courses')">📚 Choose Courses to Teach</button>
+    <button class="nav-tab" onclick="showSection('create')">➕ Create Course</button>
     <button class="nav-tab" onclick="showSection('students')">👥 View Students</button>
     <button class="nav-tab" onclick="showSection('resources')">📖 View Resources</button>
   </nav>
@@ -315,6 +316,93 @@
       
       <div style="text-align: center; margin-top: 2rem;">
         <button class="btn" onclick="saveSelectedCourses()">Save Selected Courses</button>
+      </div>
+    </section>
+
+    <!-- Create Course Section -->
+    <section id="create" class="section">
+      <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+        <h2 style="margin-bottom: 1.5rem; color: #667eea;">➕ Create New Course</h2>
+        
+        <form id="createCourseForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Course Title *</label>
+              <input type="text" id="courseTitle" required placeholder="Enter course title" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Category *</label>
+              <select id="courseCategory" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+                <option value="">Select Category</option>
+                <option value="Financial Literacy">Financial Literacy</option>
+                <option value="Life Skills">Life Skills</option>
+                <option value="Career Development">Career Development</option>
+                <option value="Technology">Technology</option>
+                <option value="Entrepreneurship">Entrepreneurship</option>
+              </select>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Difficulty Level *</label>
+              <select id="courseDifficulty" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+                <option value="">Select Difficulty</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Duration (weeks) *</label>
+              <input type="number" id="courseDuration" required min="1" max="52" placeholder="8" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Course Description *</label>
+            <textarea id="courseDescription" required rows="4" placeholder="Describe what students will learn in this course..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical;"></textarea>
+          </div>
+          
+          <div style="margin-bottom: 2rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Learning Objectives</label>
+            <div id="objectives">
+              <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                <button type="button" onclick="removeObjective(this)" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 5px;">✕</button>
+              </div>
+            </div>
+            <button type="button" onclick="addObjective()" style="padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 5px;">+ Add Objective</button>
+          </div>
+          
+          <button type="submit" class="btn" style="width: 100%; padding: 1rem;">Create Course</button>
+        </form>
+      </div>
+      
+      <!-- Course Materials Section -->
+      <div id="courseMaterials" style="display: none; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 1.5rem; color: #667eea;">📚 Add Course Materials</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <!-- Lessons -->
+          <div>
+            <h4 style="margin-bottom: 1rem;">📝 Lessons</h4>
+            <div id="lessonsList"></div>
+            <button onclick="addLesson()" class="btn" style="width: 100%; margin-top: 1rem;">+ Add Lesson</button>
+          </div>
+          
+          <!-- Resources -->
+          <div>
+            <h4 style="margin-bottom: 1rem;">📎 Resources</h4>
+            <div id="resourcesList"></div>
+            <button onclick="addResource()" class="btn" style="width: 100%; margin-top: 1rem;">+ Add Resource</button>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+          <button onclick="publishCourse()" class="btn btn-success" style="margin-right: 1rem;">🚀 Publish Course</button>
+          <button onclick="saveDraft()" class="btn btn-secondary">💾 Save as Draft</button>
+        </div>
       </div>
     </section>
 
@@ -398,6 +486,61 @@
     <div class="modal-content">
       <span class="close" onclick="closeModal('studentModal')">&times;</span>
       <div id="studentContent"></div>
+    </div>
+  </div>
+
+  <div id="lessonModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('lessonModal')">&times;</span>
+      <h3>Add Lesson</h3>
+      <form id="lessonForm">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Lesson Title</label>
+          <input type="text" id="lessonTitle" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Lesson Content</label>
+          <textarea id="lessonContent" rows="6" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Video URL (optional)</label>
+          <input type="url" id="lessonVideo" placeholder="https://youtube.com/watch?v=..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <button type="submit" class="btn">Add Lesson</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="resourceModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('resourceModal')">&times;</span>
+      <h3>Add Resource</h3>
+      <form id="resourceForm">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Resource Name</label>
+          <input type="text" id="resourceName" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Resource Type</label>
+          <select id="resourceType" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            <option value="">Select Type</option>
+            <option value="pdf">PDF Document</option>
+            <option value="slides">Presentation Slides</option>
+            <option value="worksheet">Worksheet</option>
+            <option value="video">Video</option>
+            <option value="quiz">Quiz/Assessment</option>
+          </select>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Upload File</label>
+          <input type="file" id="resourceFile" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+          <textarea id="resourceDescription" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+        </div>
+        <button type="submit" class="btn">Add Resource</button>
+      </form>
     </div>
   </div>
 
@@ -532,6 +675,7 @@
       event.target.classList.add('active');
       
       if (section === 'courses') loadCourses();
+      if (section === 'create') resetCourseCreation();
       if (section === 'students') loadStudents();
       if (section === 'resources') loadResources();
     }
@@ -779,6 +923,200 @@
     function logout() {
       localStorage.removeItem('authToken');
       window.location.href = 'login.html';
+    }
+
+    let currentCourse = null;
+    let courseLessons = [];
+    let courseResources = [];
+
+    // Course Creation Functions
+    document.getElementById('createCourseForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const courseData = {
+        title: document.getElementById('courseTitle').value,
+        category: document.getElementById('courseCategory').value,
+        difficulty: document.getElementById('courseDifficulty').value,
+        duration: document.getElementById('courseDuration').value,
+        description: document.getElementById('courseDescription').value,
+        objectives: getObjectives()
+      };
+      
+      currentCourse = courseData;
+      document.getElementById('courseMaterials').style.display = 'block';
+      document.getElementById('createCourseForm').parentElement.style.display = 'none';
+      
+      alert('Course created! Now add lessons and resources.');
+    });
+
+    function addObjective() {
+      const objectivesDiv = document.getElementById('objectives');
+      const newObjective = document.createElement('div');
+      newObjective.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem;';
+      newObjective.innerHTML = `
+        <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+        <button type="button" onclick="removeObjective(this)" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 5px;">✕</button>
+      `;
+      objectivesDiv.appendChild(newObjective);
+    }
+
+    function removeObjective(button) {
+      button.parentElement.remove();
+    }
+
+    function getObjectives() {
+      const inputs = document.querySelectorAll('#objectives input');
+      return Array.from(inputs).map(input => input.value).filter(value => value.trim());
+    }
+
+    function addLesson() {
+      document.getElementById('lessonModal').style.display = 'block';
+    }
+
+    function addResource() {
+      document.getElementById('resourceModal').style.display = 'block';
+    }
+
+    document.getElementById('lessonForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const lesson = {
+        id: Date.now(),
+        title: document.getElementById('lessonTitle').value,
+        content: document.getElementById('lessonContent').value,
+        video: document.getElementById('lessonVideo').value
+      };
+      
+      courseLessons.push(lesson);
+      updateLessonsList();
+      closeModal('lessonModal');
+      this.reset();
+    });
+
+    document.getElementById('resourceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const file = document.getElementById('resourceFile').files[0];
+      const resource = {
+        id: Date.now(),
+        name: document.getElementById('resourceName').value,
+        type: document.getElementById('resourceType').value,
+        description: document.getElementById('resourceDescription').value,
+        fileName: file ? file.name : null,
+        fileSize: file ? (file.size / 1024 / 1024).toFixed(2) + ' MB' : null
+      };
+      
+      courseResources.push(resource);
+      updateResourcesList();
+      closeModal('resourceModal');
+      this.reset();
+    });
+
+    function updateLessonsList() {
+      const list = document.getElementById('lessonsList');
+      list.innerHTML = courseLessons.map(lesson => `
+        <div style="padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h5>${lesson.title}</h5>
+            <button onclick="removeLesson(${lesson.id})" style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px; cursor: pointer;">✕</button>
+          </div>
+          <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #6c757d;">${lesson.content.substring(0, 100)}...</p>
+          ${lesson.video ? `<small>🎥 Video: ${lesson.video}</small>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function updateResourcesList() {
+      const list = document.getElementById('resourcesList');
+      list.innerHTML = courseResources.map(resource => `
+        <div style="padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h5>${resource.name}</h5>
+            <button onclick="removeResource(${resource.id})" style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px; cursor: pointer;">✕</button>
+          </div>
+          <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #6c757d;">${resource.description}</p>
+          <small>Type: ${resource.type} ${resource.fileName ? `• File: ${resource.fileName} (${resource.fileSize})` : ''}</small>
+        </div>
+      `).join('');
+    }
+
+    function removeLesson(id) {
+      courseLessons = courseLessons.filter(lesson => lesson.id !== id);
+      updateLessonsList();
+    }
+
+    function removeResource(id) {
+      courseResources = courseResources.filter(resource => resource.id !== id);
+      updateResourcesList();
+    }
+
+    function publishCourse() {
+      if (!currentCourse) {
+        alert('Please create a course first.');
+        return;
+      }
+      
+      if (courseLessons.length === 0) {
+        alert('Please add at least one lesson before publishing.');
+        return;
+      }
+      
+      const fullCourse = {
+        ...currentCourse,
+        lessons: courseLessons,
+        resources: courseResources,
+        status: 'published',
+        createdDate: new Date().toLocaleDateString(),
+        id: Date.now()
+      };
+      
+      // Save to localStorage (in real app, this would be sent to server)
+      const teacherCourses = JSON.parse(localStorage.getItem('teacherCreatedCourses') || '[]');
+      teacherCourses.push(fullCourse);
+      localStorage.setItem('teacherCreatedCourses', JSON.stringify(teacherCourses));
+      
+      alert(`Course "${currentCourse.title}" published successfully!`);
+      resetCourseCreation();
+    }
+
+    function saveDraft() {
+      if (!currentCourse) {
+        alert('Please create a course first.');
+        return;
+      }
+      
+      const fullCourse = {
+        ...currentCourse,
+        lessons: courseLessons,
+        resources: courseResources,
+        status: 'draft',
+        createdDate: new Date().toLocaleDateString(),
+        id: Date.now()
+      };
+      
+      const teacherCourses = JSON.parse(localStorage.getItem('teacherCreatedCourses') || '[]');
+      teacherCourses.push(fullCourse);
+      localStorage.setItem('teacherCreatedCourses', JSON.stringify(teacherCourses));
+      
+      alert(`Course "${currentCourse.title}" saved as draft!`);
+      resetCourseCreation();
+    }
+
+    function resetCourseCreation() {
+      currentCourse = null;
+      courseLessons = [];
+      courseResources = [];
+      document.getElementById('createCourseForm').reset();
+      document.getElementById('objectives').innerHTML = `
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+          <button type="button" onclick="removeObjective(this)" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 5px;">✕</button>
+        </div>
+      `;
+      document.getElementById('courseMaterials').style.display = 'none';
+      document.getElementById('createCourseForm').parentElement.style.display = 'block';
+      updateLessonsList();
+      updateResourcesList();
     }
 
     // Initialize
