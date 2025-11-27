@@ -321,18 +321,21 @@
 
     <!-- Create Course Section -->
     <section id="create" class="section">
-      <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 2rem;">
-        <h2 style="margin-bottom: 1.5rem; color: #667eea;">➕ Create New Course</h2>
+      <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(102, 126, 234, 0.15); padding: 2.5rem; position: relative;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+          <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">📚</div>
+          <h2 style="margin: 0; color: #8b5cf6; font-size: 1.5rem; font-weight: 600;">Create New Course</h2>
+        </div>
         
         <form id="createCourseForm">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
             <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Course Title *</label>
-              <input type="text" id="courseTitle" required placeholder="Enter course title" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">Course Title <span style="color: #ef4444;">*</span></label>
+              <input type="text" id="courseTitle" required placeholder="e.g. Financial Literacy for Beginners" style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 0.95rem; transition: border-color 0.2s; background: #f9fafb;" onfocus="this.style.borderColor='#8b5cf6'; this.style.background='white'" onblur="this.style.borderColor='#e5e7eb'; this.style.background='#f9fafb'">
             </div>
             <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Category *</label>
-              <select id="courseCategory" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">Category <span style="color: #ef4444;">*</span></label>
+              <select id="courseCategory" required style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 0.95rem; background: #f9fafb; cursor: pointer;" onfocus="this.style.borderColor='#8b5cf6'; this.style.background='white'" onblur="this.style.borderColor='#e5e7eb'; this.style.background='#f9fafb'">
                 <option value="">Select Category</option>
                 <option value="Financial Literacy">Financial Literacy</option>
                 <option value="Life Skills">Life Skills</option>
@@ -343,10 +346,10 @@
             </div>
           </div>
           
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
             <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Difficulty Level *</label>
-              <select id="courseDifficulty" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">Difficulty Level <span style="color: #ef4444;">*</span></label>
+              <select id="courseDifficulty" required style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 0.95rem; background: #f9fafb; cursor: pointer;" onfocus="this.style.borderColor='#8b5cf6'; this.style.background='white'" onblur="this.style.borderColor='#e5e7eb'; this.style.background='#f9fafb'">
                 <option value="">Select Difficulty</option>
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
@@ -354,28 +357,33 @@
               </select>
             </div>
             <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Duration (weeks) *</label>
-              <input type="number" id="courseDuration" required min="1" max="52" placeholder="8" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">Duration (weeks) <span style="color: #ef4444;">*</span></label>
+              <input type="number" id="courseDuration" required min="1" max="52" placeholder="8" style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 0.95rem; background: #f9fafb;" onfocus="this.style.borderColor='#8b5cf6'; this.style.background='white'" onblur="this.style.borderColor='#e5e7eb'; this.style.background='#f9fafb'">
+              <small style="color: #6b7280; font-size: 0.8rem; margin-top: 0.25rem; display: block;">💡 Typical courses: 4-12 weeks</small>
             </div>
           </div>
           
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Course Description *</label>
-            <textarea id="courseDescription" required rows="4" placeholder="Describe what students will learn in this course..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical;"></textarea>
+          <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; font-size: 0.9rem;">Course Description <span style="color: #ef4444;">*</span></label>
+            <textarea id="courseDescription" required rows="4" placeholder="Describe what students will learn in this course and why it's valuable..." style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 0.95rem; resize: vertical; background: #f9fafb; font-family: inherit;" onfocus="this.style.borderColor='#8b5cf6'; this.style.background='white'" onblur="this.style.borderColor='#e5e7eb'; this.style.background='#f9fafb'"></textarea>
           </div>
           
-          <div style="margin-bottom: 2rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Learning Objectives</label>
+          <div style="background: #f8fafc; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; border: 2px solid #e2e8f0;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <div style="width: 32px; height: 32px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem;">🎯</div>
+              <h4 style="margin: 0; color: #374151; font-weight: 600;">Learning Objectives</h4>
+            </div>
             <div id="objectives">
-              <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
-                <button type="button" onclick="removeObjective(this)" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 5px;">✕</button>
+              <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; background: white; padding: 0.75rem; border-radius: 12px; border: 1px solid #e5e7eb;">
+                <div style="width: 24px; height: 24px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; flex-shrink: 0;">1</div>
+                <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: none; outline: none; font-size: 0.9rem;">
+                <button type="button" onclick="removeObjective(this)" style="width: 24px; height: 24px; background: #fef2f2; color: #ef4444; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">×</button>
               </div>
             </div>
-            <button type="button" onclick="addObjective()" style="padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 5px;">+ Add Objective</button>
+            <button type="button" onclick="addObjective()" style="padding: 0.75rem 1.25rem; background: #10b981; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">+ Add Objective</button>
           </div>
           
-          <button type="submit" class="btn" style="width: 100%; padding: 1rem;">Create Course</button>
+          <button type="submit" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 16px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Create Course 🚀</button>
         </form>
       </div>
       
@@ -951,11 +959,13 @@
 
     function addObjective() {
       const objectivesDiv = document.getElementById('objectives');
+      const objectiveCount = objectivesDiv.children.length + 1;
       const newObjective = document.createElement('div');
-      newObjective.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem;';
+      newObjective.style.cssText = 'display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; background: white; padding: 0.75rem; border-radius: 12px; border: 1px solid #e5e7eb;';
       newObjective.innerHTML = `
-        <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
-        <button type="button" onclick="removeObjective(this)" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 5px;">✕</button>
+        <div style="width: 24px; height: 24px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; flex-shrink: 0;">${objectiveCount}</div>
+        <input type="text" placeholder="Students will be able to..." style="flex: 1; padding: 0.5rem; border: none; outline: none; font-size: 0.9rem;">
+        <button type="button" onclick="removeObjective(this)" style="width: 24px; height: 24px; background: #fef2f2; color: #ef4444; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">×</button>
       `;
       objectivesDiv.appendChild(newObjective);
     }
