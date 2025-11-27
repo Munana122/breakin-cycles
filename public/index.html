@@ -611,6 +611,51 @@
 
 
 
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-switch label {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-switch label:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .toggle-switch input:checked + label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .toggle-switch input:checked + label:before {
+            transform: translateX(26px);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-content h1 {
@@ -1889,11 +1934,31 @@
             <div style="background: #f8f9fa; border-radius: 12px; padding: 1rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div><strong>Email Notifications</strong><br><small style="color: #6c757d;">Receive updates via email</small></div>
-                    <label style="position: relative; display: inline-block; width: 50px; height: 24px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea, #764ba2); transition: .4s; border-radius: 24px;"></span></label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="emailUpdatesToggle" onchange="toggleSetting('emailUpdates', this)" checked>
+                        <label for="emailUpdatesToggle"></label>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div><strong>Push Notifications</strong><br><small style="color: #6c757d;">Device notifications</small></div>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="notificationsToggle" onchange="toggleSetting('notifications', this)" checked>
+                        <label for="notificationsToggle"></label>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div><strong>Dark Mode</strong><br><small style="color: #6c757d;">Switch to dark theme</small></div>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleSetting('darkMode', this)">
+                        <label for="darkModeToggle"></label>
+                    </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div><strong>Push Notifications</strong><br><small style="color: #6c757d;">Device notifications</small></div>
-                    <label style="position: relative; display: inline-block; width: 50px; height: 24px;"><input type="checkbox" checked style="opacity: 0; width: 0; height: 0;"><span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea, #764ba2); transition: .4s; border-radius: 24px;"></span></label>
+                    <div><strong>Sound Effects</strong><br><small style="color: #6c757d;">Play notification sounds</small></div>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="soundToggle" onchange="toggleSetting('sound', this)" checked>
+                        <label for="soundToggle"></label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2567,7 +2632,34 @@
                 sidebar.style.right = '-350px';
             } else {
                 sidebar.style.right = '0px';
+                loadUserSettings();
             }
+        }
+        
+        function loadUserSettings() {
+            const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+            const notificationsToggle = document.getElementById('notificationsToggle');
+            const emailUpdatesToggle = document.getElementById('emailUpdatesToggle');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const soundToggle = document.getElementById('soundToggle');
+            
+            if (notificationsToggle) notificationsToggle.checked = settings.notifications !== false;
+            if (emailUpdatesToggle) emailUpdatesToggle.checked = settings.emailUpdates !== false;
+            if (darkModeToggle) darkModeToggle.checked = settings.darkMode === true;
+            if (soundToggle) soundToggle.checked = settings.sound !== false;
+        }
+        
+        function toggleSetting(settingName, element) {
+            const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+            settings[settingName] = element.checked;
+            localStorage.setItem('userSettings', JSON.stringify(settings));
+            
+            // Show feedback
+            const feedback = document.createElement('div');
+            feedback.style.cssText = 'position:fixed;top:20px;right:20px;background:#4CAF50;color:white;padding:10px 20px;border-radius:5px;z-index:10000;';
+            feedback.textContent = `${settingName.charAt(0).toUpperCase() + settingName.slice(1)} ${element.checked ? 'enabled' : 'disabled'}`;
+            document.body.appendChild(feedback);
+            setTimeout(() => feedback.remove(), 2000);
         }
         
         function showSettingsDetail(category) {
@@ -2719,7 +2811,7 @@
         
         document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const selectedCourses = Array.from(document.querySelectorAll('input[name="courses"]:checked')).map(cb => cb.value);
+            const selectedCourses = Array.from(document.querySelectorAll('input[name="courses"]:checked'));
             const goals = document.getElementById('goals').value;
             const timeline = document.getElementById('timeline').value;
             
@@ -2728,13 +2820,80 @@
                 return;
             }
             
-            let enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
-            enrollments.push({ courses: selectedCourses, goals, timeline, enrolledAt: new Date().toISOString() });
-            localStorage.setItem('enrollments', JSON.stringify(enrollments));
+            // Enroll in each selected course
+            selectedCourses.forEach(courseCheckbox => {
+                const courseTitle = courseCheckbox.value;
+                const category = courseCheckbox.dataset.category;
+                enrollInCourse(courseTitle, category);
+            });
             
             alert('Enrollment successful!');
             closeEnrollmentForm();
         });
+        
+        function enrollInCourse(courseTitle, courseType) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert('Please log in to enroll in courses');
+                return;
+            }
+            
+            // Get existing enrollments
+            let enrollments = JSON.parse(localStorage.getItem('userEnrollments') || '{}');
+            if (!enrollments[user.email]) {
+                enrollments[user.email] = [];
+            }
+            
+            // Check if already enrolled
+            const alreadyEnrolled = enrollments[user.email].some(course => course.title === courseTitle);
+            if (alreadyEnrolled) {
+                return; // Skip if already enrolled
+            }
+            
+            // Add new enrollment
+            const newCourse = {
+                title: courseTitle,
+                type: courseType,
+                enrolledDate: new Date().toISOString(),
+                progress: Math.floor(Math.random() * 30),
+                status: 'In Progress'
+            };
+            
+            enrollments[user.email].push(newCourse);
+            localStorage.setItem('userEnrollments', JSON.stringify(enrollments));
+            
+            // Update teacher's student list
+            updateTeacherStudentList(user, courseTitle);
+        }
+        
+        function updateTeacherStudentList(student, courseTitle) {
+            // Get all users to find teachers
+            const allUsers = JSON.parse(localStorage.getItem('allUsers') || '[]');
+            const teachers = allUsers.filter(user => user.role === 'teacher');
+            
+            // Add student to each teacher's student list for this course
+            let teacherStudents = JSON.parse(localStorage.getItem('teacherStudents') || '{}');
+            
+            teachers.forEach(teacher => {
+                if (!teacherStudents[teacher.email]) {
+                    teacherStudents[teacher.email] = [];
+                }
+                
+                // Check if student already exists for this teacher
+                const existingStudent = teacherStudents[teacher.email].find(s => s.email === student.email);
+                if (!existingStudent) {
+                    teacherStudents[teacher.email].push({
+                        name: student.name,
+                        email: student.email,
+                        course: courseTitle,
+                        enrolledDate: new Date().toISOString(),
+                        progress: Math.floor(Math.random() * 30)
+                    });
+                }
+            });
+            
+            localStorage.setItem('teacherStudents', JSON.stringify(teacherStudents));
+        }
         
         async function enrollInCourse(courseName) {
             const token = localStorage.getItem('authToken');
@@ -2796,6 +2955,12 @@
         // Check for target section from dashboard
         window.addEventListener('load', function() {
             checkAuthStatus();
+            
+            // Load dashboard if user is logged in
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && document.getElementById('dashboard').classList.contains('active')) {
+                loadDashboard();
+            }
             
             const targetSection = localStorage.getItem('targetSection');
             const openChatRoom = localStorage.getItem('openChatRoom');
